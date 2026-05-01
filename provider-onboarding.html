@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provider Onboarding · Alpaca Health</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Alpaca brand palette */
+      --bg: #f4f0fa;
+      --bg-elev: #ffffff;
+      --bg-secondary: #ece6f7;
+      --bg-tertiary: #ddd2ee;
+
+      --bg-success: #e8f0e4;
+      --bg-info: #e6e0f5;
+      --bg-warning: #faecd9;
+
+      --ink: #0e0a26;
+      --ink-secondary: #2e2842;
+      --ink-tertiary: #6b6580;
+      --ink-quaternary: #a8a3b8;
+
+      --accent: #7c3aed;
+      --accent-deep: #6d28d9;
+      --accent-soft: #a78bfa;
+      --success: #3d6332;
+      --info: #4c1d95;
+      --warning: #8a5a1a;
+
+      --border: #e0d8ee;
+      --border-strong: #c8bbe0;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-pill: 999px;
+
+      --serif: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    body { min-height: 100vh; }
+
+    .app {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-mark {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-family: var(--serif);
+      font-size: 17px; font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    .brand-name {
+      font-weight: 600; font-size: 18px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .brand-divider {
+      width: 1px; height: 18px;
+      background: var(--border-strong);
+      margin: 0 4px;
+    }
+    .brand-context {
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      font-weight: 500;
+    }
+    .topbar-actions { display: flex; gap: 8px; }
+
+    button {
+      font-family: var(--sans);
+      font-size: 14px; font-weight: 500;
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-strong);
+      background: var(--bg-elev);
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 140ms ease;
+    }
+    button:hover:not(:disabled) { border-color: var(--ink); }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    button.primary {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      padding: 10px 20px;
+    }
+    button.primary:hover:not(:disabled) {
+      background: var(--accent-deep);
+      border-color: var(--accent-deep);
+    }
+    button.primary:disabled {
+      background: var(--accent-soft);
+      border-color: var(--accent-soft);
+      color: white;
+      opacity: 1;
+    }
+    button.text-only {
+      background: transparent; border: none;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      border-radius: var(--radius-md);
+    }
+    button.text-only:hover {
+      color: var(--ink);
+      background: var(--bg-secondary);
+    }
+
+    select, input[type="text"], textarea {
+      font-family: var(--sans);
+      font-size: 14px;
+      padding: 10px 14px;
+      width: 100%;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      background: var(--bg-elev);
+      color: var(--ink);
+      transition: all 140ms ease;
+    }
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+    }
+    textarea { resize: vertical; min-height: 80px; }
+    input[type="checkbox"] { accent-color: var(--accent); cursor: pointer; }
+
+    .progress-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .progress-counter {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    .progress-bar {
+      height: 4px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: var(--radius-pill);
+      transition: width 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    .card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: 0 1px 3px rgba(14, 10, 38, 0.04), 0 4px 24px rgba(14, 10, 38, 0.05);
+    }
+
+    .step-head {
+      display: flex; align-items: baseline; gap: 10px;
+      flex-wrap: wrap; margin-bottom: 8px;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 36px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0;
+      color: var(--ink);
+      font-variation-settings: "opsz" 96;
+    }
+    .step-time {
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      margin: 0 0 28px;
+      font-weight: 500;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px; font-weight: 600;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.01em;
+    }
+    .badge-info { background: var(--bg-info); color: var(--info); }
+    .badge-success { background: var(--bg-success); color: var(--success); }
+    .badge-warning { background: var(--bg-warning); color: var(--warning); }
+    .badge-done { background: var(--bg-tertiary); color: var(--ink-secondary); }
+
+    .why-block {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      margin-bottom: 28px;
+      border-left: 3px solid var(--accent);
+    }
+    .label-sm {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin: 0 0 8px;
+    }
+    .why-text {
+      font-size: 15px; line-height: 1.6;
+      margin: 0; color: var(--ink);
+    }
+
+    ol.actions { margin: 0; padding-left: 24px; }
+    ol.actions li {
+      font-size: 15px; line-height: 1.7;
+      margin-bottom: 10px; color: var(--ink);
+    }
+    ol.actions li::marker {
+      color: var(--ink-quaternary);
+      font-weight: 500; font-size: 13px;
+    }
+
+    .links { margin-top: 22px; }
+    .links-list { display: flex; flex-direction: column; gap: 8px; }
+    .link-item {
+      font-size: 14px;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 11px 16px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      transition: all 140ms ease;
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 500;
+    }
+    .link-item:hover {
+      border-color: var(--accent-soft);
+      background: var(--bg-elev);
+      color: var(--accent-deep);
+    }
+    .link-arrow { color: var(--accent); font-weight: 600; }
+
+    .sample-msg {
+      margin-top: 22px; padding: 18px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+    .sample-msg-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px; flex-wrap: wrap; gap: 8px;
+    }
+    .sample-msg-meta {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+    .sample-msg-meta strong {
+      color: var(--ink-secondary);
+      font-weight: 600;
+    }
+    .sample-msg-body {
+      font-family: var(--mono);
+      font-size: 12.5px; line-height: 1.7;
+      white-space: pre-wrap; word-wrap: break-word;
+      margin: 0; padding: 14px 16px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--ink);
+    }
+
+    .input-section {
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+    .input-field { margin-bottom: 18px; }
+    .input-field label.field-label {
+      display: block;
+      font-size: 13px;
+      color: var(--ink-secondary);
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+    .checkbox-field {
+      display: flex; align-items: flex-start; gap: 10px;
+      cursor: pointer; font-size: 14px; line-height: 1.5;
+    }
+    .checkbox-field input { margin-top: 3px; flex-shrink: 0; }
+    .multiselect { display: flex; flex-direction: column; gap: 8px; }
+    .field-note {
+      font-size: 12.5px;
+      color: var(--ink-tertiary);
+      margin: 7px 0 0;
+      line-height: 1.5;
+    }
+
+    .review-section {
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+    .review-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      margin-top: 8px;
+      table-layout: fixed;
+      overflow: hidden;
+    }
+    .review-table td {
+      padding: 11px 16px;
+      vertical-align: top;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+      word-wrap: break-word;
+    }
+    .review-table tr:last-child td { border-bottom: none; }
+    .review-table .key {
+      width: 45%;
+      color: var(--ink-tertiary);
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+    .review-table .val { color: var(--ink); }
+    .review-table .empty {
+      color: var(--ink-quaternary);
+      font-style: italic;
+    }
+    .export-actions {
+      display: flex; gap: 8px; align-items: center;
+      flex-wrap: wrap; margin-top: 14px;
+    }
+    .copy-feedback {
+      font-size: 12.5px;
+      color: var(--success);
+      font-weight: 500;
+    }
+    .review-note {
+      font-size: 12.5px;
+      color: var(--ink-tertiary);
+      margin: 14px 0 0;
+      line-height: 1.6;
+    }
+
+    .handoff {
+      margin-top: 28px; padding: 18px;
+      background: var(--bg-success);
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--success);
+    }
+    .handoff p { margin: 0; font-size: 14.5px; line-height: 1.6; }
+    .handoff-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--success);
+      margin-bottom: 6px;
+    }
+
+    .step-foot {
+      margin-top: 32px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .done-toggle {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; cursor: pointer; font-weight: 500;
+    }
+    .support-link {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      text-decoration: none;
+    }
+    .support-link:hover { color: var(--accent-deep); }
+
+    .step-dots {
+      display: flex; gap: 5px;
+      margin-top: 18px; flex-wrap: wrap;
+    }
+    .step-dot {
+      flex: 1; min-width: 16px; height: 6px;
+      padding: 0;
+      background: var(--bg-tertiary);
+      border: none;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: background 140ms ease;
+    }
+    .step-dot:hover { background: var(--accent-soft); }
+    .step-dot.current { background: var(--ink-secondary); }
+    .step-dot.complete { background: var(--accent); }
+
+    .footer-bar {
+      display: flex; gap: 10px;
+      margin-top: 28px; align-items: center;
+    }
+    .phase-label {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      font-weight: 500;
+    }
+
+    /* Cover */
+    .cover { padding: 52px 40px; }
+    .cover-eyebrow {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 18px;
+    }
+    .cover-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 56px;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin: 0 0 20px;
+      color: var(--ink);
+      font-variation-settings: "opsz" 144;
+    }
+    .cover-title em {
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 400;
+    }
+    .cover-deck {
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink-secondary);
+      margin: 0 0 36px;
+      max-width: 580px;
+    }
+    .cover-callout {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-bottom: 28px;
+      border-left: 3px solid var(--accent);
+    }
+    .cover-callout-title {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--ink-secondary);
+      margin: 0 0 8px;
+    }
+    .cover-callout p {
+      font-size: 15px; line-height: 1.6;
+      margin: 0; color: var(--ink);
+    }
+    .cover-callout a {
+      color: var(--accent-deep);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .cover-callout a:hover { text-decoration: underline; }
+
+    .cover-section-label {
+      font-family: var(--serif);
+      font-size: 26px; font-weight: 400;
+      color: var(--ink);
+      margin: 0 0 18px;
+      letter-spacing: -0.015em;
+    }
+    .cover-section-label em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .cover-list {
+      list-style: none; padding: 0;
+      margin: 0 0 36px;
+      counter-reset: cover-counter;
+    }
+    .cover-list li {
+      counter-increment: cover-counter;
+      display: flex; gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px; line-height: 1.5;
+    }
+    .cover-list li:last-child { border-bottom: none; }
+    .cover-list li::before {
+      content: counter(cover-counter, decimal-leading-zero);
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+      flex-shrink: 0;
+      min-width: 30px;
+      padding-top: 2px;
+      letter-spacing: 0.02em;
+    }
+    .cover-list-title { font-weight: 600; color: var(--ink); }
+    .cover-list-desc { color: var(--ink-tertiary); font-size: 14px; }
+
+    .cover-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 16px; font-weight: 500;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      background: var(--accent);
+      color: white;
+      border: 1px solid var(--accent);
+      cursor: pointer;
+      transition: all 140ms ease;
+      font-family: var(--sans);
+    }
+    .cover-cta:hover {
+      background: var(--accent-deep);
+      border-color: var(--accent-deep);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.3);
+    }
+    .cover-cta-arrow { transition: transform 140ms ease; }
+    .cover-cta:hover .cover-cta-arrow { transform: translateX(3px); }
+
+    .state-select-card h1 { font-size: 32px; margin-bottom: 10px; }
+    .state-select-intro {
+      font-size: 15px; line-height: 1.6;
+      color: var(--ink-secondary);
+      margin: 0 0 22px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 600px) {
+      .app { padding: 20px 16px 48px; }
+      .card { padding: 24px 20px; }
+      .cover { padding: 32px 24px; }
+      .cover-title { font-size: 38px; }
+      .cover-deck { font-size: 16px; }
+      h1 { font-size: 28px; }
+      .topbar { flex-wrap: wrap; gap: 12px; }
+      .brand-context { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <span class="brand-name">Alpaca Health</span>
+        <span class="brand-divider"></span>
+        <span class="brand-context">Provider Onboarding</span>
+      </div>
+      <div class="topbar-actions" id="topbar-actions"></div>
+    </div>
+
+    <div id="header-area" style="display: none;">
+      <div class="progress-row">
+        <p class="progress-counter" id="step-counter">Step 1 of 11</p>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div id="step-container"></div>
+
+    <div id="footer-area" class="footer-bar" style="display: none;">
+      <button id="back-btn">← Back</button>
+      <button id="next-btn" class="primary">Mark complete & continue →</button>
+      <span class="phase-label" id="phase-label"></span>
+    </div>
+  </div>
+
+<script>
+const storage = {
+  async get(key) {
+    const v = localStorage.getItem(key);
+    if (v === null) return null;
+    return { key, value: v };
+  },
+  async set(key, value) { localStorage.setItem(key, value); return { key, value }; },
+  async delete(key) { localStorage.removeItem(key); return { key, deleted: true }; }
+};
+
+const SUPPORT_EMAIL = "support@alpacahealth.io";
+
+const STATES = [
+  {code:"AL",name:"Alabama",sos:"https://www.sos.alabama.gov/government-records/business-entity-records",wc:"required-with-employees"},
+  {code:"AK",name:"Alaska",sos:"https://www.commerce.alaska.gov/cbp/main/Search/Entities",wc:"required-with-employees"},
+  {code:"AZ",name:"Arizona",sos:"https://ecorp.azcc.gov/EntitySearch/Index",wc:"required-with-employees"},
+  {code:"AR",name:"Arkansas",sos:"https://www.sos.arkansas.gov/corps/search_all.php",wc:"required-with-employees"},
+  {code:"CA",name:"California",sos:"https://bizfileonline.sos.ca.gov/search/business",wc:"required-all-employers"},
+  {code:"CO",name:"Colorado",sos:"https://www.coloradosos.gov/biz/BusinessEntityCriteriaExt.do",wc:"required-all-employers"},
+  {code:"CT",name:"Connecticut",sos:"https://service.ct.gov/business/s/onlinebusinesssearch",wc:"required-all-employers"},
+  {code:"DE",name:"Delaware",sos:"https://icis.corp.delaware.gov/eCorp/EntitySearch/NameSearch.aspx",wc:"required-with-employees"},
+  {code:"FL",name:"Florida",sos:"https://search.sunbiz.org/Inquiry/CorporationSearch/ByName",wc:"required-with-employees"},
+  {code:"GA",name:"Georgia",sos:"https://ecorp.sos.ga.gov/BusinessSearch",wc:"required-with-employees"},
+  {code:"HI",name:"Hawaii",sos:"https://hbe.ehawaii.gov/documents/search.html",wc:"required-with-employees"},
+  {code:"ID",name:"Idaho",sos:"https://sosbiz.idaho.gov/search/business",wc:"required-with-employees"},
+  {code:"IL",name:"Illinois",sos:"https://www.ilsos.gov/corporatellc/",wc:"required-with-employees"},
+  {code:"IN",name:"Indiana",sos:"https://bsd.sos.in.gov/publicbusinesssearch",wc:"required-with-employees"},
+  {code:"IA",name:"Iowa",sos:"https://sos.iowa.gov/search/business/search.aspx",wc:"required-with-employees"},
+  {code:"KS",name:"Kansas",sos:"https://www.sos.ks.gov/eforms/BusinessEntity/Search.aspx",wc:"required-with-employees"},
+  {code:"KY",name:"Kentucky",sos:"https://web.sos.ky.gov/ftshow/(S(0nclvayh1jyyrjmqejotzc55))/default.aspx",wc:"required-with-employees"},
+  {code:"LA",name:"Louisiana",sos:"https://coraweb.sos.la.gov/CommercialSearch/CommercialSearch.aspx",wc:"required-with-employees"},
+  {code:"ME",name:"Maine",sos:"https://icrs.informe.org/nei-sos-icrs/ICRS",wc:"required-with-employees"},
+  {code:"MD",name:"Maryland",sos:"https://egov.maryland.gov/BusinessExpress/EntitySearch",wc:"required-with-employees"},
+  {code:"MA",name:"Massachusetts",sos:"https://corp.sec.state.ma.us/CorpWeb/CorpSearch/CorpSearch.aspx",wc:"required-all-employers"},
+  {code:"MI",name:"Michigan",sos:"https://cofs.lara.state.mi.us/SearchApi/Search/Search",wc:"required-with-employees"},
+  {code:"MN",name:"Minnesota",sos:"https://mblsportal.sos.mn.gov/Business/Search",wc:"required-with-employees"},
+  {code:"MS",name:"Mississippi",sos:"https://corp.sos.ms.gov/corp/portal/c/page/corpBusinessIdSearch/portal.aspx",wc:"required-with-employees"},
+  {code:"MO",name:"Missouri",sos:"https://bsd.sos.mo.gov/BusinessEntity/BESearch.aspx",wc:"required-with-employees"},
+  {code:"MT",name:"Montana",sos:"https://biz.sosmt.gov/search/business",wc:"required-with-employees"},
+  {code:"NE",name:"Nebraska",sos:"https://www.nebraska.gov/sos/corp/corpsearch.cgi",wc:"required-with-employees"},
+  {code:"NV",name:"Nevada",sos:"https://esos.nv.gov/EntitySearch/OnlineEntitySearch",wc:"required-with-employees"},
+  {code:"NH",name:"New Hampshire",sos:"https://quickstart.sos.nh.gov/online/BusinessInquire",wc:"required-with-employees"},
+  {code:"NJ",name:"New Jersey",sos:"https://www.njportal.com/DOR/BusinessNameSearch/Search/Availability",wc:"required-with-employees"},
+  {code:"NM",name:"New Mexico",sos:"https://enterprise.sos.nm.gov/search",wc:"required-with-employees"},
+  {code:"NY",name:"New York",sos:"https://apps.dos.ny.gov/publicInquiry/",wc:"required-all-employers"},
+  {code:"NC",name:"North Carolina",sos:"https://www.sosnc.gov/online_services/search/by_title/_Business_Registration",wc:"required-with-employees"},
+  {code:"ND",name:"North Dakota",sos:"https://firststop.sos.nd.gov/search/business",wc:"required-with-employees"},
+  {code:"OH",name:"Ohio",sos:"https://businesssearch.ohiosos.gov/",wc:"required-with-employees"},
+  {code:"OK",name:"Oklahoma",sos:"https://www.sos.ok.gov/corp/corpInquiryFind.aspx",wc:"required-with-employees"},
+  {code:"OR",name:"Oregon",sos:"https://sos.oregon.gov/business/Pages/find.aspx",wc:"required-with-employees"},
+  {code:"PA",name:"Pennsylvania",sos:"https://www.corporations.pa.gov/search/corpsearch",wc:"required-with-employees"},
+  {code:"RI",name:"Rhode Island",sos:"https://business.sos.ri.gov/CorpWeb/CorpSearch/CorpSearch.aspx",wc:"required-with-employees"},
+  {code:"SC",name:"South Carolina",sos:"https://businessfilings.sc.gov/BusinessFiling/Entity/Search",wc:"required-with-employees"},
+  {code:"SD",name:"South Dakota",sos:"https://sosenterprise.sd.gov/businessservices/business/businesssearch.aspx",wc:"required-with-employees"},
+  {code:"TN",name:"Tennessee",sos:"https://tnbear.tn.gov/Ecommerce/FilingSearch.aspx",wc:"required-with-employees"},
+  {code:"TX",name:"Texas",sos:"https://www.sos.state.tx.us/corp/sosda/index.shtml",wc:"opt-in"},
+  {code:"UT",name:"Utah",sos:"https://secure.utah.gov/bes/",wc:"required-with-employees"},
+  {code:"VT",name:"Vermont",sos:"https://www.vtsosonline.com/online/BusinessInquire/",wc:"required-with-employees"},
+  {code:"VA",name:"Virginia",sos:"https://cis.scc.virginia.gov/EntitySearch/Index",wc:"required-with-employees"},
+  {code:"WA",name:"Washington",sos:"https://ccfs.sos.wa.gov/#/AdvancedSearch",wc:"required-with-employees"},
+  {code:"WV",name:"West Virginia",sos:"https://apps.sos.wv.gov/business/corporations/",wc:"required-with-employees"},
+  {code:"WI",name:"Wisconsin",sos:"https://www.wdfi.org/apps/CorpSearch/Search.aspx",wc:"required-with-employees"},
+  {code:"WY",name:"Wyoming",sos:"https://wyobiz.wyo.gov/Business/FilingSearch.aspx",wc:"required-with-employees"},
+  {code:"DC",name:"District of Columbia",sos:"https://corponline.dcra.dc.gov/Account.aspx/LogOn",wc:"required-all-employers"}
+];
+
+const TONY_EMAIL = "tony.abrudeanu@doxainsurance.com";
+const TONY_SUBJECT = "ABA liability insurance — Alpaca Health referral";
+const TONY_BODY = `Hi Tony,
+
+I'm a [BCBA / RBT] starting my own ABA practice and was referred to you by Alpaca Health for professional and general liability insurance. I'd like to get a quote for solo practitioner coverage to start.
+
+A few quick details about my practice:
+• Practice / LLC name: [Your LLC name]
+• State of operation: [Your state]
+• Service model: One-tier (I'll be delivering all services personally to start)
+• Service location: In-home
+• Estimated start date: [Approximate date]
+• Anticipated client volume: [e.g., 1–5 clients to start]
+
+Could you let me know what you'd need from me to put together a quote, and what typical coverage limits and pricing look like for a practice my size?
+
+Thanks,
+[Your name]
+[Your phone number]`;
+
+let formData = {
+  practiceName: "", ownerName: "", wantsReferrals: "", languages: "",
+  ein: "", hasW9: false, hasCP575: false,
+  bankRouting: "", bankAccount: "", bankName: "",
+  businessEmail: "", agesServiced: [], clientPreferences: "", availability: ""
+};
+
+const AGE_OPTIONS = ["0–2 (early intervention)", "3–5 (preschool)", "6–11 (school-age)", "12–17 (adolescent)", "18+ (adult)"];
+
+const COVER_SUMMARY = [
+  ["Build your LLC", "pick a name, file with your state, get an EIN from the IRS"],
+  ["Get liability insurance", "professional & general coverage for your practice"],
+  ["Open a business bank account", "separate from personal, ready for Alpaca payouts"],
+  ["Handle worker's comp", "only what's actually required in your state"],
+  ["Decide your practice model", "services, ages, languages, availability"],
+  ["Get a HIPAA-compliant email", "Alpaca-provided or your own domain"],
+  ["Register your practice with Alpaca", "submit the Practice Onboarding Form"],
+  ["Set up scheduling", "connect Cal.com so families can book consultations"],
+  ["Get your intake form link", "your unique URL for accepting referrals"],
+  ["Take the consultation call", "accept your first family and schedule the assessment"]
+];
+
+function fieldInputs(stepKey) {
+  if (stepKey === "step1") return [
+    { key: "practiceName", label: "Practice name", placeholder: "e.g. Front Range ABA Services LLC", note: "This becomes your LLC name and your Practice Name on the Practice Onboarding Form." },
+    { key: "ownerName", label: "Your name (the practice owner)", placeholder: "First and last name", note: "Used for the 'Select your name from the list' field on the Practice Onboarding Form." }
+  ];
+  if (stepKey === "step2") return [
+    { key: "ein", label: "EIN (once you have it)", placeholder: "XX-XXXXXXX", note: "You'll receive this immediately if applying online with the IRS, or within a few days through Bizee." },
+    { key: "hasCP575", label: "I have my IRS Form CP575 saved", type: "checkbox", note: "This is the EIN confirmation letter the IRS issues. You'll upload it to the Practice Onboarding Form later." },
+    { key: "hasW9", label: "I have a completed W-9 saved", type: "checkbox", note: "Use the IRS template linked above in the action steps." }
+  ];
+  if (stepKey === "step4") return [
+    { key: "bankName", label: "Bank name", placeholder: "e.g. Chase, Novo, Relay" },
+    { key: "bankRouting", label: "Routing number", placeholder: "9 digits" },
+    { key: "bankAccount", label: "Account number", placeholder: "Your business checking account number", note: "Alpaca uses these for biweekly payouts." }
+  ];
+  if (stepKey === "model") return [
+    { key: "wantsReferrals", label: "Do you want Alpaca to refer you clients?", type: "select", options: ["Yes", "No"] },
+    { key: "languages", label: "Languages you can deliver services in", placeholder: "e.g. English, Spanish", note: "Comma-separated. Used directly on the Practice Onboarding Form." },
+    { key: "agesServiced", label: "Ages you'll service", type: "multiselect", options: AGE_OPTIONS },
+    { key: "availability", label: "Availability for sessions", type: "textarea", placeholder: "e.g. Weekday mornings 8am–12pm, Tuesday and Thursday evenings, no weekends" },
+    { key: "clientPreferences", label: "Client preferences (optional)", type: "textarea", placeholder: "Any details about clients you prefer to work with" }
+  ];
+  if (stepKey === "email") return [
+    { key: "businessEmail", label: "Business email", placeholder: "leave blank if you'd like an Alpaca-provided email", note: "Per the Practice Onboarding Form: leave blank if using an Alpaca email." }
+  ];
+  return [];
+}
+
+function getStep1(state) {
+  return {
+    key: "step1",
+    phase: "Phase 1 · Legal & financial foundation",
+    title: "Pick your LLC / practice name",
+    time: "15–30 minutes",
+    why: "Your LLC is the legal entity that bills insurance, employs you, and shields your personal assets. The name you pick here becomes your Practice Name on the Practice Onboarding Form and everywhere downstream.",
+    actions: [
+      "Brainstorm 3–5 candidate names. Keep it short, easy to spell, and broad enough to grow into.",
+      `Check name availability on ${state.name}'s business registry.`,
+      "Don't worry about it being final — you can file a DBA or amendment later.",
+      "Once you have a name, type it into the field below — it'll auto-populate your Practice Onboarding Form export."
+    ],
+    links: [{ label: `Search ${state.name} business registry`, url: state.sos }]
+  };
+}
+
+const STATIC_STEPS_BEFORE_WC = [
+  {
+    key: "step2",
+    phase: "Phase 1 · Legal & financial foundation",
+    title: "File your LLC and get an EIN",
+    time: "30–45 minutes (plus 1–10 business days for state processing)",
+    why: "The LLC formation gives you legal protection. The EIN is your business tax ID — required for the bank, payroll, and the Practice Onboarding Form. The IRS Form CP575 (EIN confirmation letter) and the W-9 are both uploads on the Practice Onboarding Form, so you'll want them saved.",
+    actions: [
+      "Go to Bizee. Choose Single-Member LLC unless you have co-owners. Skip every add-on.",
+      "Apply for your EIN — either through Bizee or directly with the IRS for free in about 10 minutes.",
+      "Save the IRS-issued CP575 confirmation letter (PDF) — the Practice Onboarding Form wants this uploaded.",
+      "Fill out a W-9 for the business using the IRS template. Save the PDF — the Practice Onboarding Form also wants this.",
+      "Enter your EIN below once you have it, and check the boxes once you've saved the W-9 and CP575."
+    ],
+    links: [
+      { label: "Bizee — file your LLC", url: "https://bizee.com/" },
+      { label: "Apply for an EIN free at IRS.gov", url: "https://sa.www4.irs.gov/applyein/" },
+      { label: "Form W-9 template & guide (IRS)", url: "https://www.irs.gov/forms-pubs/about-form-w-9" }
+    ]
+  },
+  {
+    key: "step3",
+    phase: "Phase 1 · Legal & financial foundation",
+    title: "Get professional & general liability insurance",
+    time: "1–3 days (quote turnaround)",
+    why: "Your previous employer's policy stopped covering you the moment you left. Alpaca's onboarding will need proof of coverage, and most payers require it.",
+    actions: [
+      "If you'll be a solo practitioner (one-tier model), get coverage for yourself personally.",
+      `Email Tony at Doxa Insurance (${TONY_EMAIL}) — Alpaca's recommended vendor — and mention Alpaca Health referred you. A sample message is below; you can copy it, fill in the bracketed placeholders, and send.`,
+      "Optionally try CPH Insurance for a comparison quote.",
+      "Save the certificate of insurance (COI) PDF — keep it accessible for any future audits or contract requests."
+    ],
+    links: [
+      { label: `Email Tony at Doxa Insurance (${TONY_EMAIL})`, url: `mailto:${TONY_EMAIL}?subject=${encodeURIComponent(TONY_SUBJECT)}&body=${encodeURIComponent(TONY_BODY)}` },
+      { label: "CPH Insurance (alternate quote)", url: "https://www.cphins.com/" }
+    ],
+    showSampleMessage: true
+  },
+  {
+    key: "step4",
+    phase: "Phase 1 · Legal & financial foundation",
+    title: "Open a business bank account",
+    time: "30–60 minutes",
+    why: "Mixing personal and business funds weakens your LLC's legal protection. Alpaca needs your bank routing and account numbers on the Practice Onboarding Form to send your biweekly payouts.",
+    actions: [
+      "Open at the bank where you already have personal accounts (often fastest), or use Novo, Relay, or Bluevine online.",
+      "Bring your LLC formation documents, EIN confirmation letter, and government-issued ID.",
+      "Once open, enter your routing number, account number, and bank name below — these go straight into the Practice Onboarding Form."
+    ],
+    links: [
+      { label: "Novo — online business banking", url: "https://www.novo.co/" },
+      { label: "Relay — online business banking", url: "https://relayfi.com/" },
+      { label: "Bluevine — online business banking", url: "https://www.bluevine.com/" }
+    ]
+  }
+];
+
+function getWorkerCompStep(state) {
+  if (state.wc === "opt-in") return {
+    key: "wc",
+    phase: "Phase 1 · Legal & financial foundation",
+    title: `Worker's comp — optional in ${state.name}`,
+    time: "5 minutes (just a decision)",
+    why: `${state.name} is one of the few states where worker's comp is opt-in rather than required, even with employees. As a one-tier solo practice with no staff, you can defer this decision entirely. If you later hire RBTs, revisit it then.`,
+    actions: [
+      `Confirm: you have no employees and you're operating as a single-member LLC. If true, skip this step in ${state.name} and move on.`,
+      "If you're already planning to hire staff before patient #1, you'll still want coverage even though it's optional.",
+      "When you're ready, the easiest path is NEXT through Alpaca Payroll — pay-as-you-go.",
+      "If using NEXT: under 'Your Name' use Michael Gao, michael.gao@alpacahealth.io, 2145177619. Under 'Customer Name' put your own info. Under 'NEXT Partner Name' put ALPACA."
+    ],
+    links: [{ label: "NEXT worker's comp signup form (optional, use ALPACA as partner)", url: "https://info.apintego.com/salsa" }],
+    stateBadge: `${state.name} — opt-in`,
+    canSkip: true
+  };
+  if (state.wc === "required-all-employers") return {
+    key: "wc",
+    phase: "Phase 1 · Legal & financial foundation",
+    title: `Set up worker's comp — required in ${state.name}`,
+    time: "20 min – 2 hours",
+    why: `${state.name} requires worker's comp coverage broadly. Confirm whether single-member LLCs with no employees are exempt — but plan to set this up before hiring.`,
+    actions: [
+      "Confirm your state's exact rule for single-member LLCs with no employees.",
+      "Choose a path: traditional broker (AmTrust, Cerity, Hartford, or local) with upfront premium, OR NEXT through Alpaca Payroll for pay-as-you-go.",
+      "Recommended: NEXT, because pay-as-you-go scales with your actual payroll.",
+      "If using NEXT: under 'Your Name' use Michael Gao, michael.gao@alpacahealth.io, 2145177619. Under 'Customer Name' put your own info. Under 'NEXT Partner Name' put ALPACA."
+    ],
+    links: [{ label: "NEXT worker's comp signup (use ALPACA as partner)", url: "https://info.apintego.com/salsa" }],
+    stateBadge: `${state.name} — required`
+  };
+  return {
+    key: "wc",
+    phase: "Phase 1 · Legal & financial foundation",
+    title: `Worker's comp — required only with employees in ${state.name}`,
+    time: "5 min decision (skip), or 20 min – 2 hours (set up)",
+    why: `In ${state.name}, worker's comp is generally only required once you have employees. As a one-tier solo practice, you can usually defer until your first hire.`,
+    actions: [
+      `Confirm ${state.name}'s employee threshold. If you're truly solo, you're typically exempt.`,
+      "If exempt: save proof of single-member LLC status and revisit when you hire. Skip the rest.",
+      "If hiring before patient #1, set up via NEXT (pay-as-you-go through Alpaca Payroll) or a broker.",
+      "If using NEXT: under 'Your Name' use Michael Gao, michael.gao@alpacahealth.io, 2145177619. Under 'Customer Name' put your own info. Under 'NEXT Partner Name' put ALPACA."
+    ],
+    links: [{ label: "NEXT worker's comp signup (only if needed, use ALPACA as partner)", url: "https://info.apintego.com/salsa" }],
+    stateBadge: `${state.name} — required with employees`,
+    canSkip: true
+  };
+}
+
+const MODEL_STEP = {
+  key: "model",
+  phase: "Phase 2 · Practice model + remaining onboarding details",
+  title: "Lock in your model & capture remaining onboarding details",
+  time: "15 minutes",
+  why: "The Practice Onboarding Form asks about referral preference, languages, ages, and availability. Capturing them here keeps the export complete. Operationally: start one-tier and in-home for the fastest path to patient #1.",
+  actions: [
+    "Decide: 'For my first patient, I'm operating one-tier and in-home.'",
+    "Set a reasonable travel radius for your geography.",
+    "If you actually want to open a center on day one, pause and contact Michael at Alpaca first.",
+    "Fill in the fields below — they'll feed the Practice Onboarding Form export."
+  ],
+  links: [{ label: "Email Michael at Alpaca about centers", url: "mailto:michael.gao@alpacahealth.io?subject=Center-based%20practice%20—%20financial%20model%20review" }]
+};
+
+const EMAIL_STEP = {
+  key: "email",
+  phase: "Phase 3 · Communication & scheduling",
+  title: "Get a HIPAA-compliant email",
+  time: "5 minutes (Alpaca route) or 1–2 hours (own domain)",
+  why: "Free Gmail/Yahoo/Outlook are not HIPAA-compliant. The Practice Onboarding Form asks for your business email — and explicitly says to leave it blank if you want an Alpaca-provided one.",
+  actions: [
+    "Decision: do you want an Alpaca-provided HIPAA email, or your own custom domain email? Alpaca-provided is fastest.",
+    `If Alpaca-provided: email ${SUPPORT_EMAIL} requesting one, and leave the field below blank.`,
+    "If your own domain: buy a domain (Namecheap/Porkbun, ~$10–15/yr) and set up Google Workspace or Microsoft 365 with a signed BAA. Enter the address below.",
+    "A website is not required to see your first patient."
+  ],
+  links: [
+    { label: "Request an Alpaca-provided HIPAA email", url: `mailto:${SUPPORT_EMAIL}?subject=Request%20HIPAA-compliant%20Alpaca%20email` },
+    { label: "Namecheap (domain registrar)", url: "https://www.namecheap.com/" },
+    { label: "How to sign a BAA with Google Workspace", url: "https://www.totalhipaa.com/how-to-get-a-baa-with-google/" }
+  ]
+};
+
+const SUBMIT_STEP = {
+  key: "submit",
+  phase: "Phase 3 · Communication & scheduling",
+  title: "Review & submit Alpaca's Practice Onboarding Form",
+  time: "20–30 minutes",
+  isReview: true,
+  why: "This is the form that registers your practice in Alpaca's backend. Until it's submitted, Alpaca can't route referrals or pay you. Below, you'll see everything you've collected so far formatted to match the Practice Onboarding Form's fields. Copy or download it, then paste into the Practice Onboarding Form.",
+  actions: [
+    "Review the export below. Anything missing or wrong? Hit Back to fix it at the source step.",
+    "Click Copy to clipboard, or Download as a .txt file.",
+    "Open the Practice Onboarding Form. Paste each field into its matching question.",
+    "Upload your W-9 and IRS Form CP575 directly to the Practice Onboarding Form when prompted (those are file uploads — they can't be exported as text).",
+    "Submit the Practice Onboarding Form and wait for Alpaca confirmation."
+  ],
+  links: [{ label: "Open the Practice Onboarding Form", url: "https://airtable.com/appXraplzuYoNoWkq/pagHGQgeRddW2Joce/form" }]
+};
+
+const POST_SUBMIT_STEPS = [
+  {
+    key: "calcom",
+    phase: "Phase 3 · Communication & scheduling",
+    title: "Set up your Cal.com scheduling",
+    time: "20–30 minutes",
+    why: "Alpaca's referral engine books families directly onto your Cal.com calendar. Without it, families can't get on your calendar.",
+    actions: [
+      `Log in to Cal.com. If you don't see an invite to the Alpaca Health team, email ${SUPPORT_EMAIL}.`,
+      "Set your weekly availability windows.",
+      "Settings → Calendars: connect your Google calendar so bookings land there and personal events block availability.",
+      "Test the 'Initial Consultation' event type by clicking the up-arrow square."
+    ],
+    links: [
+      { label: "Open Cal.com", url: "https://app.cal.com/" },
+      { label: "Email support if missing the Alpaca team invite", url: `mailto:${SUPPORT_EMAIL}?subject=Cal.com%20—%20missing%20Alpaca%20Health%20team%20invite` }
+    ]
+  },
+  {
+    key: "intake",
+    phase: "Phase 4 · Get the referral",
+    title: "Grab your organization-specific intake form link",
+    time: "5 minutes",
+    why: "Every clinic in the Alpaca network has its own intake form. Submissions route only to your practice and auto-create client records.",
+    actions: [
+      "Log in to your Alpaca dashboard and click the Referrals page.",
+      "Copy your unique intake form link. Save it (notes app, email signature).",
+      "Optional: upload your clinic logo in the branding section.",
+      `If you can't find the link, email ${SUPPORT_EMAIL}.`
+    ],
+    links: [{ label: "Open the Alpaca Referrals page", url: "https://secure.alpacahealth.io/referrals" }]
+  },
+  {
+    key: "consult",
+    phase: "Phase 4 · Get the referral",
+    title: "Take the consultation call & accept the family",
+    time: "30 min consult + 5 min to accept",
+    why: "When Alpaca matches a family to you, the single most predictive thing for a timely start is scheduling the assessment while still on the consult call. Once you've accepted a family and have an assessment scheduled, your infrastructure is fully in place — the next steps move into actually delivering care, which is covered in a separate guide.",
+    actions: [
+      "Watch your Cal.com / email for a booked Initial Consultation. Text or call ahead — info is on the Client Overview page.",
+      "On the call: ask about strengths, challenges, and goals. Share your background. Confirm logistics.",
+      "If it's a fit, go to Referrals → Accept → schedule the assessment right then.",
+      "Exception: TriCare families require waiting for the 97151 auth to be uploaded by Alpaca first.",
+      "If they don't answer, send a text. If silent, hit the Unresponsive toggle.",
+      "Once the assessment is on the calendar, you're ready for the patient-care guide (assessment, treatment plan, authorization, recurring appointments)."
+    ],
+    links: [{ label: "Open Referrals to Accept / schedule assessment", url: "https://secure.alpacahealth.io/referrals" }],
+    isFinal: true
+  }
+];
+
+function buildSteps(state) {
+  return [
+    getStep1(state),
+    ...STATIC_STEPS_BEFORE_WC,
+    getWorkerCompStep(state),
+    MODEL_STEP,
+    EMAIL_STEP,
+    SUBMIT_STEP,
+    ...POST_SUBMIT_STEPS
+  ];
+}
+
+let stage = "cover";
+let selectedState = null;
+let STEPS = [];
+let TOTAL = 0;
+let currentStep = 0;
+let completed = [];
+
+const stepContainer = document.getElementById('step-container');
+const stepCounter = document.getElementById('step-counter');
+const phaseLabel = document.getElementById('phase-label');
+const progressFill = document.getElementById('progress-fill');
+const backBtn = document.getElementById('back-btn');
+const nextBtn = document.getElementById('next-btn');
+const headerArea = document.getElementById('header-area');
+const footerArea = document.getElementById('footer-area');
+const topbarActions = document.getElementById('topbar-actions');
+
+function escapeHtml(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+}
+
+function renderTopbarActions() {
+  if (stage === "steps") {
+    topbarActions.innerHTML = `
+      <button class="text-only" id="change-state-btn">Change state</button>
+      <button class="text-only" id="restart-btn">Restart</button>
+    `;
+    document.getElementById('change-state-btn').addEventListener('click', changeState);
+    document.getElementById('restart-btn').addEventListener('click', restartProgress);
+  } else {
+    topbarActions.innerHTML = '';
+  }
+}
+
+async function loadAll() {
+  try {
+    const seenCover = await storage.get('alpaca:seenCover');
+    const stateRec = await storage.get('alpaca:state');
+    if (seenCover && seenCover.value === "true" && stateRec && stateRec.value) {
+      const found = STATES.find(s => s.code === stateRec.value);
+      if (found) { selectedState = found; stage = "steps"; }
+    } else if (seenCover && seenCover.value === "true") {
+      stage = "stateSelect";
+    }
+  } catch (e) {}
+
+  try {
+    const fd = await storage.get('alpaca:formdata');
+    if (fd && fd.value) formData = { ...formData, ...JSON.parse(fd.value) };
+  } catch (e) {}
+
+  if (stage === "steps" && selectedState) {
+    STEPS = buildSteps(selectedState);
+    TOTAL = STEPS.length;
+    try {
+      const cur = await storage.get('alpaca:currentStep');
+      if (cur && cur.value !== undefined) currentStep = parseInt(cur.value, 10) || 0;
+    } catch (e) {}
+    try {
+      const comp = await storage.get('alpaca:completed');
+      if (comp && comp.value) completed = JSON.parse(comp.value);
+      if (!Array.isArray(completed) || completed.length !== TOTAL) completed = new Array(TOTAL).fill(false);
+    } catch (e) { completed = new Array(TOTAL).fill(false); }
+    if (currentStep >= TOTAL) currentStep = TOTAL - 1;
+    renderStep();
+  } else if (stage === "stateSelect") {
+    renderStateSelect();
+  } else {
+    renderCover();
+  }
+  renderTopbarActions();
+}
+
+async function persist() {
+  await storage.set('alpaca:currentStep', String(currentStep));
+  await storage.set('alpaca:completed', JSON.stringify(completed));
+  await storage.set('alpaca:formdata', JSON.stringify(formData));
+}
+
+function renderCover() {
+  headerArea.style.display = 'none';
+  footerArea.style.display = 'none';
+  renderTopbarActions();
+
+  const summaryHtml = COVER_SUMMARY.map(([title, desc]) => `
+    <li>
+      <span><span class="cover-list-title">${escapeHtml(title)}</span> — <span class="cover-list-desc">${escapeHtml(desc)}</span></span>
+    </li>
+  `).join('');
+
+  stepContainer.innerHTML = `
+    <div class="card cover">
+      <p class="cover-eyebrow">For new providers</p>
+      <h1 class="cover-title">Set up your <em>practice.</em></h1>
+      <p class="cover-deck">Everything a new provider needs to establish their practice with Alpaca and get ready to see patients — done one step at a time.</p>
+
+      <div class="cover-callout">
+        <p class="cover-callout-title">Take it at your own pace</p>
+        <p>You can start and stop whenever you need. Your progress and any information you enter is saved automatically in this browser — close the tab, come back later, and you'll pick up right where you left off.</p>
+      </div>
+
+      <p class="cover-section-label">What you'll <em>do</em></p>
+      <ol class="cover-list">${summaryHtml}</ol>
+
+      <div class="cover-callout">
+        <p class="cover-callout-title">Need help along the way?</p>
+        <p>Reach out to Alpaca's support team any time — they're available throughout your onboarding for questions about any step. <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>
+      </div>
+
+      <button class="cover-cta" id="cover-start">Get started <span class="cover-cta-arrow">→</span></button>
+    </div>
+  `;
+
+  document.getElementById('cover-start').addEventListener('click', async () => {
+    await storage.set('alpaca:seenCover', "true");
+    stage = "stateSelect";
+    renderStateSelect();
+  });
+}
+
+function renderStateSelect() {
+  headerArea.style.display = 'none';
+  footerArea.style.display = 'none';
+  renderTopbarActions();
+
+  stepContainer.innerHTML = `
+    <div class="card state-select-card">
+      <h1>Where will your practice operate?</h1>
+      <p class="state-select-intro">Some steps change based on your state — worker's comp rules, your Secretary of State link, and Medicaid authorization mechanics. Picking your state now means you'll only see the work that applies to you.</p>
+      <select id="state-select" style="margin-bottom: 18px;">
+        <option value="">Select your state…</option>
+        ${STATES.map(s => `<option value="${s.code}">${escapeHtml(s.name)}</option>`).join('')}
+      </select>
+      <div style="display: flex; gap: 10px;">
+        <button id="state-back">← Back to overview</button>
+        <button id="state-confirm" class="primary" disabled>Start my onboarding →</button>
+      </div>
+    </div>
+  `;
+
+  const sel = document.getElementById('state-select');
+  const btn = document.getElementById('state-confirm');
+  sel.addEventListener('change', () => { btn.disabled = !sel.value; });
+  document.getElementById('state-back').addEventListener('click', () => {
+    stage = "cover";
+    renderCover();
+  });
+  btn.addEventListener('click', async () => {
+    if (!sel.value) return;
+    selectedState = STATES.find(s => s.code === sel.value);
+    STEPS = buildSteps(selectedState);
+    TOTAL = STEPS.length;
+    currentStep = 0;
+    completed = new Array(TOTAL).fill(false);
+    await storage.set('alpaca:state', selectedState.code);
+    await persist();
+    stage = "steps";
+    renderStep();
+    renderTopbarActions();
+  });
+}
+
+function buildExportText() {
+  const s = selectedState;
+  const lines = [];
+  lines.push("ALPACA PRACTICE ONBOARDING FORM — FIELD EXPORT");
+  lines.push("=".repeat(55));
+  lines.push("");
+  lines.push("Paste each value into the matching field on the Practice Onboarding Form:");
+  lines.push("https://airtable.com/appXraplzuYoNoWkq/pagHGQgeRddW2Joce/form");
+  lines.push("");
+  lines.push("---");
+  lines.push("");
+  const rows = [
+    ["Practice Name", formData.practiceName],
+    ["Select your name from the list", formData.ownerName],
+    ["Do you want Alpaca to refer you clients?", formData.wantsReferrals],
+    ["State", s ? s.name : ""],
+    ["What languages do you feel comfortable delivering services in?", formData.languages],
+    ["EIN", formData.ein],
+    ["W-9", formData.hasW9 ? "Ready to upload (saved as PDF)" : "Not yet ready — see Step 2"],
+    ["IRS Form CP575", formData.hasCP575 ? "Ready to upload (saved as PDF)" : "Not yet ready — see Step 2"],
+    ["Bank Routing Number", formData.bankRouting],
+    ["Bank Account Number", formData.bankAccount],
+    ["Bank Name", formData.bankName],
+    ["Business Email", formData.businessEmail || "(blank — using Alpaca-provided email)"],
+    ["Ages Serviced", (formData.agesServiced && formData.agesServiced.length) ? formData.agesServiced.join(", ") : ""],
+    ["Share any details about which clients you prefer to work with", formData.clientPreferences],
+    ["Availability", formData.availability]
+  ];
+  rows.forEach(([k, v]) => {
+    lines.push(k + ":");
+    lines.push(v || "(not yet provided)");
+    lines.push("");
+  });
+  lines.push("---");
+  lines.push("");
+  lines.push("FILE UPLOADS REQUIRED ON THE PRACTICE ONBOARDING FORM:");
+  lines.push("- W-9 (PDF you completed using the IRS template)");
+  lines.push("- IRS Form CP575 (the EIN confirmation letter the IRS sent you)");
+  return lines.join("\n");
+}
+
+function buildExportHtml() {
+  const fields = [
+    ["Practice Name", formData.practiceName],
+    ["Select your name from the list", formData.ownerName],
+    ["Do you want Alpaca to refer you clients?", formData.wantsReferrals],
+    ["State", selectedState ? selectedState.name : ""],
+    ["What languages do you feel comfortable delivering services in?", formData.languages],
+    ["EIN", formData.ein],
+    ["W-9", formData.hasW9 ? "Ready to upload" : "Not yet ready"],
+    ["IRS Form CP575", formData.hasCP575 ? "Ready to upload" : "Not yet ready"],
+    ["Bank Routing Number", formData.bankRouting],
+    ["Bank Account Number", formData.bankAccount],
+    ["Bank Name", formData.bankName],
+    ["Business Email", formData.businessEmail || "(blank — using Alpaca-provided email)"],
+    ["Ages Serviced", (formData.agesServiced && formData.agesServiced.length) ? formData.agesServiced.join(", ") : ""],
+    ["Client preferences (optional)", formData.clientPreferences],
+    ["Availability", formData.availability]
+  ];
+
+  const rows = fields.map(([k, v]) => {
+    const display = v ? escapeHtml(v) : `<span class="empty">not yet provided</span>`;
+    return `<tr><td class="key">${escapeHtml(k)}</td><td class="val">${display}</td></tr>`;
+  }).join("");
+
+  return `
+    <table class="review-table">${rows}</table>
+    <div class="export-actions">
+      <button id="copy-export" class="primary">Copy to clipboard</button>
+      <button id="download-export">Download as .txt</button>
+      <span class="copy-feedback" id="copy-feedback"></span>
+    </div>
+    <p class="review-note">Note: the W-9 and CP575 are file uploads on the Practice Onboarding Form. You'll need to attach those PDFs directly when you reach the form — they can't be exported as text.</p>
+  `;
+}
+
+function buildSampleMessageHtml() {
+  return `
+    <div class="sample-msg">
+      <div class="sample-msg-head">
+        <p class="label-sm" style="margin: 0;">Sample message to Tony — fill in the bracketed parts</p>
+        <button id="copy-tony-message">Copy message</button>
+      </div>
+      <div class="sample-msg-meta">
+        <strong>To:</strong> ${escapeHtml(TONY_EMAIL)}<br/>
+        <strong>Subject:</strong> ${escapeHtml(TONY_SUBJECT)}
+      </div>
+      <pre class="sample-msg-body">${escapeHtml(TONY_BODY)}</pre>
+      <span class="copy-feedback" id="tony-copy-feedback" style="margin-top: 10px; display: inline-block;"></span>
+    </div>
+  `;
+}
+
+function bindExportButtons() {
+  const copyBtn = document.getElementById('copy-export');
+  const dlBtn = document.getElementById('download-export');
+  const feedback = document.getElementById('copy-feedback');
+  if (!copyBtn || !dlBtn) return;
+
+  copyBtn.addEventListener('click', async () => {
+    const text = buildExportText();
+    try {
+      await navigator.clipboard.writeText(text);
+      feedback.textContent = "Copied ✓";
+      setTimeout(() => { feedback.textContent = ""; }, 2500);
+    } catch (e) {
+      feedback.textContent = "Couldn't access clipboard — use Download instead.";
+      feedback.style.color = "var(--warning)";
+    }
+  });
+
+  dlBtn.addEventListener('click', () => {
+    const text = buildExportText();
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'alpaca-onboarding-export.txt';
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+    feedback.textContent = "Downloaded ✓";
+    setTimeout(() => { feedback.textContent = ""; }, 2500);
+  });
+}
+
+function bindSampleMessageButton() {
+  const btn = document.getElementById('copy-tony-message');
+  const feedback = document.getElementById('tony-copy-feedback');
+  if (!btn) return;
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(TONY_BODY);
+      feedback.textContent = "Copied ✓";
+      setTimeout(() => { feedback.textContent = ""; }, 2500);
+    } catch (e) {
+      feedback.textContent = "Couldn't access clipboard — please select and copy manually.";
+      feedback.style.color = "var(--warning)";
+    }
+  });
+}
+
+function renderInputField(field) {
+  const v = formData[field.key];
+  const note = field.note ? `<p class="field-note">${escapeHtml(field.note)}</p>` : "";
+
+  if (field.type === "checkbox") {
+    return `<div class="input-field">
+      <label class="checkbox-field">
+        <input type="checkbox" data-field="${field.key}" ${v ? "checked" : ""} />
+        <span>${escapeHtml(field.label)}</span>
+      </label>${note}</div>`;
+  }
+  if (field.type === "select") {
+    return `<div class="input-field">
+      <label class="field-label">${escapeHtml(field.label)}</label>
+      <select data-field="${field.key}">
+        <option value="">Select…</option>
+        ${field.options.map(o => `<option value="${escapeHtml(o)}" ${v === o ? "selected" : ""}>${escapeHtml(o)}</option>`).join("")}
+      </select>${note}</div>`;
+  }
+  if (field.type === "multiselect") {
+    const selected = Array.isArray(v) ? v : [];
+    return `<div class="input-field">
+      <label class="field-label">${escapeHtml(field.label)}</label>
+      <div class="multiselect">
+        ${field.options.map(o => `
+          <label class="checkbox-field">
+            <input type="checkbox" data-multi="${field.key}" value="${escapeHtml(o)}" ${selected.includes(o) ? "checked" : ""} />
+            <span>${escapeHtml(o)}</span>
+          </label>
+        `).join("")}
+      </div>${note}</div>`;
+  }
+  if (field.type === "textarea") {
+    return `<div class="input-field">
+      <label class="field-label">${escapeHtml(field.label)}</label>
+      <textarea data-field="${field.key}" placeholder="${escapeHtml(field.placeholder || "")}" rows="3">${escapeHtml(v || "")}</textarea>
+      ${note}</div>`;
+  }
+  return `<div class="input-field">
+    <label class="field-label">${escapeHtml(field.label)}</label>
+    <input type="text" data-field="${field.key}" value="${escapeHtml(v || "")}" placeholder="${escapeHtml(field.placeholder || "")}" />
+    ${note}</div>`;
+}
+
+function bindInputs() {
+  document.querySelectorAll('[data-field]').forEach(el => {
+    const handler = () => {
+      const k = el.getAttribute('data-field');
+      formData[k] = el.type === "checkbox" ? el.checked : el.value;
+      persist();
+    };
+    el.addEventListener('input', handler);
+    el.addEventListener('change', handler);
+  });
+  document.querySelectorAll('[data-multi]').forEach(el => {
+    el.addEventListener('change', () => {
+      const k = el.getAttribute('data-multi');
+      const v = el.value;
+      const cur = Array.isArray(formData[k]) ? [...formData[k]] : [];
+      if (el.checked) {
+        if (!cur.includes(v)) cur.push(v);
+      } else {
+        const i = cur.indexOf(v);
+        if (i >= 0) cur.splice(i, 1);
+      }
+      formData[k] = cur;
+      persist();
+    });
+  });
+}
+
+function renderStep() {
+  headerArea.style.display = 'block';
+  footerArea.style.display = 'flex';
+  renderTopbarActions();
+
+  const s = STEPS[currentStep];
+  const isDone = completed[currentStep];
+  const completedCount = completed.filter(Boolean).length;
+  const pct = Math.round((completedCount / TOTAL) * 100);
+
+  stepCounter.textContent = `${selectedState.name}  ·  Step ${currentStep + 1} of ${TOTAL}  ·  ${completedCount}/${TOTAL} done  ·  ${pct}%`;
+  phaseLabel.textContent = s.phase;
+  progressFill.style.width = `${pct}%`;
+
+  backBtn.disabled = currentStep === 0;
+
+  if (currentStep === TOTAL - 1 && isDone) {
+    nextBtn.textContent = "Practice infrastructure complete ✓";
+    nextBtn.disabled = true;
+  } else if (currentStep === TOTAL - 1) {
+    nextBtn.textContent = 'Mark complete & finish →';
+    nextBtn.disabled = false;
+  } else {
+    nextBtn.textContent = isDone ? 'Continue to next step →' : 'Mark complete & continue →';
+    nextBtn.disabled = false;
+  }
+
+  const stateBadgeHtml = s.stateBadge ? `<span class="badge badge-info">${escapeHtml(s.stateBadge)}</span>` : '';
+  const skipBadgeHtml = s.canSkip ? `<span class="badge badge-success">May be skippable</span>` : '';
+  const reviewBadgeHtml = s.isReview ? `<span class="badge badge-warning">Review & export</span>` : '';
+  const finalBadgeHtml = s.isFinal ? `<span class="badge badge-success">Final infrastructure step</span>` : '';
+  const doneBadge = isDone ? `<span class="badge badge-done">Done</span>` : '';
+
+  const linksHtml = s.links && s.links.length ? `
+    <div class="links">
+      <p class="label-sm">Links & forms</p>
+      <div class="links-list">
+        ${s.links.map(l => `<a class="link-item" href="${l.url}" target="_blank" rel="noopener"><span class="link-arrow">→</span> ${escapeHtml(l.label)}</a>`).join('')}
+      </div>
+    </div>
+  ` : '';
+
+  const actionsHtml = `<ol class="actions">${s.actions.map(a => `<li>${escapeHtml(a)}</li>`).join('')}</ol>`;
+  const sampleMsgHtml = s.showSampleMessage ? buildSampleMessageHtml() : '';
+
+  const inputs = fieldInputs(s.key);
+  const inputsHtml = inputs.length ? `
+    <div class="input-section">
+      <p class="label-sm">Provide the following information</p>
+      ${inputs.map(renderInputField).join('')}
+    </div>
+  ` : '';
+
+  const reviewHtml = s.isReview ? `
+    <div class="review-section">
+      <p class="label-sm">Your Practice Onboarding Form export — review before submitting</p>
+      ${buildExportHtml()}
+    </div>
+  ` : '';
+
+  const handoffHtml = s.isFinal ? `
+    <div class="handoff">
+      <p class="handoff-label">What's next</p>
+      <p>After this step, your practice infrastructure is complete and your first family is on your calendar. The next phase — running the assessment, building the treatment plan, getting the authorization, and scheduling recurring appointments — is covered in a separate patient-care guide.</p>
+    </div>
+  ` : '';
+
+  stepContainer.innerHTML = `
+    <div class="card">
+      <div class="step-head">
+        <h1>${escapeHtml(s.title)}</h1>
+        ${stateBadgeHtml}${skipBadgeHtml}${reviewBadgeHtml}${finalBadgeHtml}${doneBadge}
+      </div>
+      <p class="step-time">Estimated time · ${escapeHtml(s.time)}</p>
+
+      <div class="why-block">
+        <p class="label-sm">Why this matters</p>
+        <p class="why-text">${escapeHtml(s.why)}</p>
+      </div>
+
+      <p class="label-sm">What to do</p>
+      ${actionsHtml}
+      ${sampleMsgHtml}
+      ${linksHtml}
+      ${inputsHtml}
+      ${reviewHtml}
+      ${handoffHtml}
+
+      <div class="step-foot">
+        <label class="done-toggle">
+          <input type="checkbox" id="done-toggle" ${isDone ? 'checked' : ''} />
+          <span>I've completed this step${s.canSkip ? " (or it doesn't apply to me)" : ""}</span>
+        </label>
+        <a class="support-link" href="mailto:${SUPPORT_EMAIL}?subject=Question%20about%20Provider%20Onboarding%20—%20${encodeURIComponent(s.title)}">Question about this step? ${SUPPORT_EMAIL}</a>
+      </div>
+    </div>
+
+    <div class="step-dots">
+      ${STEPS.map((st, i) => {
+        const cls = completed[i] ? 'complete' : (i === currentStep ? 'current' : '');
+        return `<button class="step-dot ${cls}" data-jump="${i}" title="${escapeHtml(st.title)}" aria-label="Jump to step ${i + 1}: ${escapeHtml(st.title)}"></button>`;
+      }).join('')}
+    </div>
+  `;
+
+  document.getElementById('done-toggle').addEventListener('change', (e) => {
+    completed[currentStep] = e.target.checked;
+    persist(); renderStep();
+  });
+
+  document.querySelectorAll('[data-jump]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentStep = parseInt(btn.getAttribute('data-jump'), 10);
+      persist(); renderStep();
+    });
+  });
+
+  bindInputs();
+  if (s.isReview) bindExportButtons();
+  if (s.showSampleMessage) bindSampleMessageButton();
+}
+
+backBtn.addEventListener('click', () => {
+  if (currentStep > 0) { currentStep--; persist(); renderStep(); }
+});
+
+nextBtn.addEventListener('click', () => {
+  completed[currentStep] = true;
+  if (currentStep < TOTAL - 1) currentStep++;
+  persist(); renderStep();
+});
+
+async function restartProgress() {
+  if (!confirm('Reset all progress and form data? Your state selection will be kept.')) return;
+  currentStep = 0;
+  completed = new Array(TOTAL).fill(false);
+  formData = { practiceName: "", ownerName: "", wantsReferrals: "", languages: "", ein: "", hasW9: false, hasCP575: false, bankRouting: "", bankAccount: "", bankName: "", businessEmail: "", agesServiced: [], clientPreferences: "", availability: "" };
+  await persist();
+  renderStep();
+}
+
+async function changeState() {
+  if (!confirm('Change your state? Your progress will reset, but the form data you entered will be kept.')) return;
+  selectedState = null;
+  currentStep = 0;
+  completed = [];
+  await storage.delete('alpaca:state');
+  await storage.delete('alpaca:currentStep');
+  await storage.delete('alpaca:completed');
+  stage = "stateSelect";
+  renderStateSelect();
+}
+
+loadAll();
+</script>
+</body>
+</html>
