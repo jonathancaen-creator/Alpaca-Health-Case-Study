@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provider Knowledge Base · Alpaca Health</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f0fa;
+      --bg-elev: #ffffff;
+      --bg-secondary: #ece6f7;
+      --bg-tertiary: #ddd2ee;
+      --bg-success: #e8f0e4;
+
+      --ink: #0e0a26;
+      --ink-secondary: #2e2842;
+      --ink-tertiary: #6b6580;
+      --ink-quaternary: #a8a3b8;
+
+      --accent: #7c3aed;
+      --accent-deep: #6d28d9;
+      --accent-soft: #a78bfa;
+      --success: #3d6332;
+
+      --border: #e0d8ee;
+      --border-strong: #c8bbe0;
+
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-pill: 999px;
+
+      --serif: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    body { min-height: 100vh; }
+
+    .app {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand-mark {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-family: var(--serif);
+      font-size: 17px; font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    .brand-name {
+      font-weight: 600; font-size: 18px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .brand-divider {
+      width: 1px; height: 18px;
+      background: var(--border-strong);
+      margin: 0 4px;
+    }
+    .brand-context {
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      font-weight: 500;
+    }
+    .home-link {
+      margin-left: auto;
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 6px 10px;
+      border-radius: var(--radius-md);
+    }
+    .home-link:hover { color: var(--accent-deep); background: var(--bg-secondary); }
+
+    /* ---- Home page ---- */
+    .eyebrow {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 14px;
+    }
+    .home-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 44px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin: 0 0 16px;
+      color: var(--ink);
+      font-variation-settings: "opsz" 144;
+    }
+    .home-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .home-deck {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-secondary);
+      margin: 0 0 28px;
+      max-width: 600px;
+    }
+
+    .search-wrap {
+      position: relative;
+      margin-bottom: 32px;
+    }
+    .search-wrap input {
+      width: 100%;
+      padding: 14px 16px 14px 46px;
+      font-size: 14.5px;
+      font-family: var(--sans);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-pill);
+      background: white;
+      color: var(--ink);
+      transition: all 140ms ease;
+    }
+    .search-wrap input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+    }
+    .search-icon {
+      position: absolute;
+      left: 18px; top: 16px;
+      width: 16px; height: 16px;
+      color: var(--ink-tertiary);
+      pointer-events: none;
+    }
+
+    /* ---- Search results ---- */
+    .search-results { display: none; margin-bottom: 32px; }
+    .search-results.active { display: block; }
+    .search-section-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin: 0 0 10px;
+    }
+    .search-bucket-result {
+      display: block;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      text-decoration: none;
+      color: var(--ink);
+      margin-bottom: 20px;
+      transition: all 140ms ease;
+      cursor: pointer;
+    }
+    .search-bucket-result:hover {
+      border-color: var(--accent-soft);
+    }
+    .search-bucket-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin: 0 0 4px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .search-bucket-title svg {
+      width: 18px; height: 18px;
+      color: var(--accent);
+    }
+    .search-bucket-desc {
+      font-size: 13.5px;
+      color: var(--ink-tertiary);
+      margin: 0;
+    }
+    .search-articles {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .search-article {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 14px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 14px;
+      transition: all 140ms ease;
+    }
+    .search-article:hover {
+      border-color: var(--accent-soft);
+      background: var(--bg-secondary);
+    }
+    .search-article-bucket {
+      font-size: 11px;
+      color: var(--ink-tertiary);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .search-article-title {
+      flex: 1;
+      font-weight: 500;
+    }
+    .search-article-arrow {
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .search-empty {
+      padding: 24px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--ink-tertiary);
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .search-empty a {
+      color: var(--accent-deep);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ---- Bucket cards (home grid) ---- */
+    .bucket-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .bucket-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--ink);
+      display: block;
+      transition: all 160ms ease;
+    }
+    .bucket-card:hover {
+      border-color: var(--accent-soft);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+    }
+    .bucket-card-icon {
+      width: 22px; height: 22px;
+      color: var(--accent);
+      margin-bottom: 14px;
+      display: block;
+    }
+    .bucket-card-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 21px;
+      line-height: 1.2;
+      margin: 0 0 6px;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+    }
+    .bucket-card-desc {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--ink-tertiary);
+      margin: 0;
+    }
+    .bucket-card-full {
+      grid-column: 1 / -1;
+    }
+
+    .home-footer {
+      margin-top: 36px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .home-footer-text {
+      font-size: 13.5px;
+      color: var(--ink-tertiary);
+    }
+    .home-footer-link {
+      font-size: 13.5px;
+      color: var(--accent-deep);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .home-footer-link:hover { text-decoration: underline; }
+
+    /* ---- Bucket page ---- */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 20px;
+      padding: 6px 10px;
+      border-radius: var(--radius-md);
+      margin-left: -10px;
+    }
+    .back-link:hover { color: var(--accent-deep); background: var(--bg-secondary); }
+
+    .bucket-page-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .bucket-page-icon-wrap {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bucket-page-icon-wrap svg {
+      width: 24px; height: 24px;
+      color: var(--accent-deep);
+    }
+    .bucket-page-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 36px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0;
+      color: var(--ink);
+      flex: 1;
+    }
+    .bucket-page-deck {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-secondary);
+      margin: 0 0 24px;
+      max-width: 640px;
+    }
+
+    .featured-tool {
+      background: white;
+      border: 1px solid var(--accent-soft);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .featured-tool-text { flex: 1; min-width: 200px; }
+    .featured-tool-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 6px;
+    }
+    .featured-tool-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      margin: 0 0 4px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .featured-tool-desc {
+      font-size: 14px;
+      color: var(--ink-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .featured-tool-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: var(--accent);
+      color: white;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 140ms ease;
+    }
+    .featured-tool-cta:hover {
+      background: var(--accent-deep);
+    }
+
+    .article-list-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin: 0 0 12px;
+    }
+    .article-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .article-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--ink);
+      transition: all 140ms ease;
+    }
+    .article-item:hover {
+      border-color: var(--accent-soft);
+      background: var(--bg-elev);
+    }
+    .article-item-content {
+      flex: 1;
+    }
+    .article-item-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin: 0 0 2px;
+      color: var(--ink);
+    }
+    .article-item-section {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+    }
+    .article-item-arrow {
+      color: var(--accent);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .article-subgroup-label {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 22px 0 10px;
+      letter-spacing: -0.01em;
+    }
+    .article-subgroup-label:first-child { margin-top: 0; }
+
+    .bucket-page-footer {
+      margin-top: 36px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+      font-size: 13.5px;
+      color: var(--ink-tertiary);
+    }
+    .bucket-page-footer a {
+      color: var(--accent-deep);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 640px) {
+      .app { padding: 20px 16px 48px; }
+      .home-title { font-size: 32px; }
+      .bucket-page-title { font-size: 28px; }
+      .bucket-grid { grid-template-columns: 1fr; }
+      .bucket-page-head { flex-direction: column; gap: 12px; }
+      .featured-tool { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand-mark">A</div>
+      <span class="brand-name">Alpaca Health</span>
+      <span class="brand-divider"></span>
+      <span class="brand-context">Knowledge Base</span>
+      <a href="#" class="home-link" id="home-link" style="display: none;">← Home</a>
+    </div>
+
+    <main id="content"></main>
+  </div>
+
+<script>
+// ============================================================================
+// Data: buckets, articles, icons
+// ============================================================================
+const SUPPORT_EMAIL = "support@alpacahealth.io";
+const ONBOARDING_TOOL_URL = "https://jonathancaen-creator.github.io/Alpaca-Health-Case-Study/provider-onboarding.html";
+
+const ICONS = {
+  briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg>',
+  trending: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>',
+  dollar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  clipboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>',
+  pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  person: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>',
+  family: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
+};
+
+const BASE = "https://alpaca-health-knowledge-base.help.usepylon.com/articles/";
+
+const BUCKETS = [
+  {
+    id: "set-up",
+    icon: "briefcase",
+    title: "Set up a new practice",
+    deck: "The path from credentialed clinician to your first patient on the calendar. Form your LLC, get credentialed, register with Alpaca, and get scheduled to receive referrals.",
+    cardDesc: "LLC, EIN, NPI, CAQH, banking, insurance, scheduling, intake.",
+    featuredTool: {
+      eyebrow: "Step-by-step tool",
+      title: "Provider Onboarding",
+      desc: "An interactive, state-aware checklist that walks you through every action needed to set up your practice and see your first patient.",
+      cta: "Open the tool",
+      url: ONBOARDING_TOOL_URL
+    },
+    sections: [
+      {
+        label: "Form your business",
+        articles: [
+          { title: "LLC, incorporation, banking, worker's comp & liability insurance", url: BASE + "7381382338-llc-incorporation-banking-worker-s-comp-liability-insurance" },
+          { title: "Define your practice model", url: BASE + "8553767966-define-your-practice-model" },
+          { title: "Website and email setup", url: BASE + "3937119011-website-and-email-setup" }
+        ]
+      },
+      {
+        label: "Get credentialed",
+        articles: [
+          { title: "How to get an NPI", url: BASE + "2051847762-how-to-get-an-npi" },
+          { title: "Create a CAQH profile", url: BASE + "9709364789-create-a-caqh-profile" }
+        ]
+      },
+      {
+        label: "Register with Alpaca and start receiving referrals",
+        articles: [
+          { title: "A guide to Alpaca-sourced referrals", url: BASE + "8875599342-a-guide-to-alpaca-sourced-referrals" },
+          { title: "Setting up Cal.com referrals", url: BASE + "7272036519-setting-up-cal-com-referrals" },
+          { title: "Accessing your organization-specific intake form", url: BASE + "1032737090-accessing-your-organization-specific-intake-form" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "grow",
+    icon: "trending",
+    title: "Grow my practice",
+    deck: "Once your practice is running, this is how you scale: hire clinical staff, manage clients, and use Alpaca's clinical tools to handle a larger caseload.",
+    cardDesc: "Hiring, treatment plans, recurring appointments, scaling clinical work.",
+    sections: [
+      {
+        label: "Hire and onboard staff",
+        articles: [
+          { title: "How to onboard new RBTs and BCBAs to your team", url: BASE + "1038487746-how-to-onboard-new-rbts-and-bcbas-to-your-team" }
+        ]
+      },
+      {
+        label: "Manage clinical work at scale",
+        articles: [
+          { title: "BCBA clinical programming in Alpaca", url: BASE + "4051139767-bcba-clinical-programming-in-alpaca" },
+          { title: "Treatment Plan Generator (AI)", url: BASE + "7714964679-treatment-plan-generator-ai" },
+          { title: "Submitting treatment plans", url: BASE + "5842394658-submitting-treatment-plans" },
+          { title: "Adding recurring appointments", url: BASE + "5577547817-adding-recurring-appointments" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "get-paid",
+    icon: "dollar",
+    title: "Get paid from Alpaca",
+    deck: "Everything about money flowing into your practice and out to you and your team. Combines payouts, payroll setup, and the tax-account legwork that makes payroll actually run.",
+    cardDesc: "Payouts, payroll setup, owner's draw, state-specific tax accounts.",
+    sections: [
+      {
+        label: "How money flows into your practice",
+        articles: [
+          { title: "Guide to Alpaca's payout system", url: BASE + "2202137947-guide-to-alpaca-s-payout-system" },
+          { title: "How do practice owners get paid: W-2, 1099, owner's draw", url: BASE + "1246074864-how-do-practice-owners-get-paid-w-2-1099-owner-s-draw" }
+        ]
+      },
+      {
+        label: "Set up payroll for your practice",
+        articles: [
+          { title: "Set up your organization payroll account", url: BASE + "5137614644-set-up-your-payroll" },
+          { title: "Run additional payroll (bonus, reimbursement, etc.)", url: BASE + "1681038308-run-additional-payroll-ie-bonus-reimbursement-etc" }
+        ]
+      },
+      {
+        label: "State-specific payroll account setup",
+        articles: [
+          { title: "Minnesota payroll setup", url: BASE + "6417298585-minnesota-payroll-setup" },
+          { title: "Colorado payroll account setup", url: BASE + "6469986693-colorado-payroll-account-setup" },
+          { title: "Texas payroll account setup", url: BASE + "8634817543-texas-payroll-account-setup" },
+          { title: "Hawaii payroll account setup", url: BASE + "5917158760-hawaii-payroll-account-setup" },
+          { title: "Virginia payroll guide", url: BASE + "3280960725-virginia-payroll-guide" },
+          { title: "Georgia payroll guide", url: BASE + "5883736344-georgia-payroll-guide" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "deliver-care",
+    icon: "clipboard",
+    title: "Deliver clinical care today",
+    deck: "The day-to-day workflow when you're sitting down to write a treatment plan or running a session with a client. Practical clinical operations.",
+    cardDesc: "Sessions, treatment plans, programming, recurring appointments.",
+    sections: [
+      {
+        label: "Treatment planning",
+        articles: [
+          { title: "Treatment Plan Generator (AI)", url: BASE + "7714964679-treatment-plan-generator-ai" },
+          { title: "Submitting treatment plans", url: BASE + "5842394658-submitting-treatment-plans" },
+          { title: "BCBA clinical programming in Alpaca", url: BASE + "4051139767-bcba-clinical-programming-in-alpaca" }
+        ]
+      },
+      {
+        label: "Scheduling",
+        articles: [
+          { title: "Adding recurring appointments", url: BASE + "5577547817-adding-recurring-appointments" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "payer",
+    icon: "pin",
+    title: "Work with a specific payer",
+    deck: "Each payer has its own rules. Some can deny an entire treatment plan over a single non-compliant goal; some have authorization timers that expire in days. Reference the payer you're working with.",
+    cardDesc: "Colorado Medicaid, TriCare West — payer-specific rules.",
+    sections: [
+      {
+        label: "Colorado Medicaid",
+        articles: [
+          { title: "Colorado Medicaid treatment plan tips", url: BASE + "8083985444-colorado-medicaid-treatment-plan-tips" },
+          { title: "97156 in Colorado Medicaid (parent training is not billable)", url: BASE + "8355685079-97156-in-colorado-medicaid" },
+          { title: "Assessments are case rates in CO Medicaid", url: BASE + "8557452677-assessments-are-case-rates-in-co-medicaid" },
+          { title: "Requesting 2:1 services in Colorado without 0373T", url: BASE + "4667111938-requesting-2-1-services-in-colorado-without-0373t" }
+        ]
+      },
+      {
+        label: "TriCare West",
+        articles: [
+          { title: "97151 authorization for TriCare", url: BASE + "1642131146-97151-authorization-for-tricare" },
+          { title: "TriCare treatment plans", url: BASE + "1227220748-tricare-treatment-plans" },
+          { title: "97151 units for TriCare must be used in 14 days", url: BASE + "8360129169-97151-units-for-tricare-must-be-used-in-14-days" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "bt-rbt",
+    icon: "person",
+    title: "For BTs and RBTs",
+    deck: "If you're a Behavior Technician or Registered Behavior Technician (not a practice owner), this is your starting point. Run sessions, set up your own payroll, and update sessions as needed.",
+    cardDesc: "Run sessions, set up your own payroll, change session types.",
+    sections: [
+      {
+        label: "Running sessions",
+        articles: [
+          { title: "Run a BT data collection session", url: BASE + "1212226243-run-a-bt-data-collection-session" },
+          { title: "How to change the session type or CPT code", url: BASE + "3887477617-how-to-change-the-session-type-or-cpt-code" }
+        ]
+      },
+      {
+        label: "Getting paid",
+        articles: [
+          { title: "Set up individual employee payroll (your own paycheck info)", url: BASE + "7392304119-set-up-individual-employee-payroll" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "parents",
+    icon: "family",
+    title: "For parents and families",
+    deck: "If you're a parent or family member of a child receiving ABA services through Alpaca, this is for you. Understand how billing works and what you'll be charged.",
+    cardDesc: "How patient responsibility, copays, and billing work.",
+    fullWidth: true,
+    sections: [
+      {
+        label: null,
+        articles: [
+          { title: "Paying your family's patient responsibility", url: BASE + "7771934958-paying-your-family-s-patient-responsibility" }
+        ]
+      }
+    ]
+  }
+];
+
+// Flatten articles for search, with bucket reference and search-friendly keywords
+const ALL_ARTICLES = [];
+BUCKETS.forEach(bucket => {
+  bucket.sections.forEach(section => {
+    section.articles.forEach(article => {
+      // Avoid duplicating articles that appear in multiple buckets
+      const existing = ALL_ARTICLES.find(a => a.url === article.url);
+      if (existing) {
+        if (!existing.bucketIds.includes(bucket.id)) {
+          existing.bucketIds.push(bucket.id);
+        }
+      } else {
+        ALL_ARTICLES.push({
+          title: article.title,
+          url: article.url,
+          bucketIds: [bucket.id]
+        });
+      }
+    });
+  });
+});
+
+// Bucket-level search keywords (what someone might type that should match this bucket)
+const BUCKET_SEARCH_TERMS = {
+  "set-up": "start new practice llc ein npi caqh business banking insurance license incorporate setup register",
+  "grow": "grow scale hire hiring rbt bcba employees team treatment plan recurring appointments",
+  "get-paid": "pay paid payment payout payroll taxes w-2 1099 owner draw salary direct deposit money state",
+  "deliver-care": "session treatment plan clinical clients programming today daily today work appointment care delivery",
+  "payer": "insurance payer medicaid tricare colorado authorization auth approval prior cpt 97151 97156 0373t",
+  "bt-rbt": "rbt bt behavior technician staff employee session data collection session note paycheck",
+  "parents": "parent family patient responsibility copay coinsurance deductible bill billing insurance card"
+};
+
+// ============================================================================
+// State + routing
+// ============================================================================
+const content = document.getElementById('content');
+const homeLink = document.getElementById('home-link');
+
+function getRoute() {
+  const hash = window.location.hash.replace('#', '');
+  if (!hash) return { type: 'home' };
+  const bucket = BUCKETS.find(b => b.id === hash);
+  if (bucket) return { type: 'bucket', bucket };
+  return { type: 'home' };
+}
+
+function navigate() {
+  const route = getRoute();
+  if (route.type === 'home') {
+    homeLink.style.display = 'none';
+    renderHome();
+  } else {
+    homeLink.style.display = 'inline-block';
+    homeLink.href = '#';
+    renderBucket(route.bucket);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+}
+
+window.addEventListener('hashchange', navigate);
+
+// ============================================================================
+// Home render
+// ============================================================================
+function escapeHtml(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+}
+
+function renderHome() {
+  const cards = BUCKETS.map(b => `
+    <a href="#${b.id}" class="bucket-card${b.fullWidth ? ' bucket-card-full' : ''}">
+      <div class="bucket-card-icon">${ICONS[b.icon]}</div>
+      <h2 class="bucket-card-title">${escapeHtml(b.title)}</h2>
+      <p class="bucket-card-desc">${escapeHtml(b.cardDesc)}</p>
+    </a>
+  `).join('');
+
+  content.innerHTML = `
+    <p class="eyebrow">For providers</p>
+    <h1 class="home-title">Welcome to Alpaca's <em>Provider Knowledge Base</em>.</h1>
+    <p class="home-deck">Everything you need to start a practice, see patients, receive reimbursement, and more — organized around what you're trying to do.</p>
+
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="m13 13-3-3"/></svg>
+      <input type="text" id="search-input" placeholder="Have a specific question? Try &ldquo;how do I set up payroll in Texas&rdquo;…" autocomplete="off" />
+    </div>
+
+    <div id="search-results" class="search-results"></div>
+
+    <div id="bucket-grid">
+      <div class="bucket-grid">${cards}</div>
+    </div>
+
+    <div class="home-footer" id="home-footer">
+      <span class="home-footer-text">Can't find what you're looking for?</span>
+      <a class="home-footer-link" href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL} →</a>
+    </div>
+  `;
+
+  bindSearch();
+}
+
+// ============================================================================
+// Search
+// ============================================================================
+function normalize(s) {
+  return String(s ?? "").toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function tokenize(s) {
+  return normalize(s).split(' ').filter(t => t.length > 1);
+}
+
+function scoreArticle(article, queryTokens) {
+  const titleNorm = normalize(article.title);
+  let score = 0;
+  let matchedTokens = 0;
+  queryTokens.forEach(token => {
+    if (titleNorm.includes(token)) {
+      matchedTokens++;
+      // Exact word boundary match scores higher than substring
+      const wordBoundary = new RegExp('\\b' + token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+      score += wordBoundary.test(article.title) ? 10 : 5;
+    }
+  });
+  // Require at least one token match
+  return matchedTokens > 0 ? score : 0;
+}
+
+function scoreBucket(bucket, queryTokens) {
+  const titleNorm = normalize(bucket.title);
+  const deckNorm = normalize(bucket.deck);
+  const termsNorm = normalize(BUCKET_SEARCH_TERMS[bucket.id] || '');
+  let score = 0;
+  let matchedTokens = 0;
+  queryTokens.forEach(token => {
+    let matched = false;
+    if (titleNorm.includes(token)) { score += 15; matched = true; }
+    if (deckNorm.includes(token)) { score += 5; matched = true; }
+    if (termsNorm.includes(token)) { score += 8; matched = true; }
+    if (matched) matchedTokens++;
+  });
+  return matchedTokens > 0 ? score : 0;
+}
+
+function runSearch(query) {
+  const tokens = tokenize(query);
+  if (tokens.length === 0) return { bucket: null, articles: [] };
+
+  // Score all buckets
+  const bucketScores = BUCKETS.map(b => ({ bucket: b, score: scoreBucket(b, tokens) }))
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  // Score all articles
+  const articleScores = ALL_ARTICLES.map(a => ({ article: a, score: scoreArticle(a, tokens) }))
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 8);
+
+  // If no bucket directly matches but articles do, infer bucket from top article
+  let topBucket = bucketScores[0]?.bucket || null;
+  if (!topBucket && articleScores.length > 0) {
+    const topArticleBucketId = articleScores[0].article.bucketIds[0];
+    topBucket = BUCKETS.find(b => b.id === topArticleBucketId);
+  }
+
+  return {
+    bucket: topBucket,
+    articles: articleScores.map(x => x.article)
+  };
+}
+
+function bindSearch() {
+  const input = document.getElementById('search-input');
+  const results = document.getElementById('search-results');
+  const grid = document.getElementById('bucket-grid');
+  const footer = document.getElementById('home-footer');
+
+  let debounceTimer;
+  input.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      const query = input.value.trim();
+      if (query.length === 0) {
+        results.classList.remove('active');
+        results.innerHTML = '';
+        grid.style.display = 'block';
+        footer.style.display = 'flex';
+        return;
+      }
+
+      grid.style.display = 'none';
+      footer.style.display = 'none';
+      results.classList.add('active');
+
+      const { bucket, articles } = runSearch(query);
+
+      if (!bucket && articles.length === 0) {
+        results.innerHTML = `
+          <div class="search-empty">
+            <p style="margin: 0 0 8px;">No matches for &ldquo;${escapeHtml(query)}&rdquo;.</p>
+            <p style="margin: 0; font-size: 13px;">Email <a href="mailto:${SUPPORT_EMAIL}?subject=Knowledge%20base%20question%3A%20${encodeURIComponent(query)}">${SUPPORT_EMAIL}</a> and we'll help.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      if (bucket) {
+        html += `
+          <p class="search-section-label">Best matching section</p>
+          <a class="search-bucket-result" href="#${bucket.id}">
+            <h3 class="search-bucket-title">${ICONS[bucket.icon]}${escapeHtml(bucket.title)}</h3>
+            <p class="search-bucket-desc">${escapeHtml(bucket.cardDesc)}</p>
+          </a>
+        `;
+      }
+      if (articles.length > 0) {
+        html += `<p class="search-section-label">Articles</p><div class="search-articles">`;
+        articles.forEach(article => {
+          const articleBucket = BUCKETS.find(b => b.id === article.bucketIds[0]);
+          html += `
+            <a class="search-article" href="${escapeHtml(article.url)}" target="_blank" rel="noopener">
+              <span class="search-article-title">${escapeHtml(article.title)}</span>
+              <span class="search-article-bucket">${escapeHtml(articleBucket?.title || '')}</span>
+              <span class="search-article-arrow">→</span>
+            </a>
+          `;
+        });
+        html += `</div>`;
+      }
+
+      results.innerHTML = html;
+    }, 120);
+  });
+
+  input.focus();
+}
+
+// ============================================================================
+// Bucket page render
+// ============================================================================
+function renderBucket(bucket) {
+  let sectionsHtml = '';
+  bucket.sections.forEach(section => {
+    if (section.label) {
+      sectionsHtml += `<h3 class="article-subgroup-label">${escapeHtml(section.label)}</h3>`;
+    }
+    sectionsHtml += '<div class="article-list">';
+    section.articles.forEach(article => {
+      sectionsHtml += `
+        <a class="article-item" href="${escapeHtml(article.url)}" target="_blank" rel="noopener">
+          <div class="article-item-content">
+            <p class="article-item-title">${escapeHtml(article.title)}</p>
+          </div>
+          <span class="article-item-arrow">→</span>
+        </a>
+      `;
+    });
+    sectionsHtml += '</div>';
+  });
+
+  let featuredHtml = '';
+  if (bucket.featuredTool) {
+    featuredHtml = `
+      <div class="featured-tool">
+        <div class="featured-tool-text">
+          <p class="featured-tool-eyebrow">${escapeHtml(bucket.featuredTool.eyebrow)}</p>
+          <h2 class="featured-tool-title">${escapeHtml(bucket.featuredTool.title)}</h2>
+          <p class="featured-tool-desc">${escapeHtml(bucket.featuredTool.desc)}</p>
+        </div>
+        <a class="featured-tool-cta" href="${escapeHtml(bucket.featuredTool.url)}" target="_blank" rel="noopener">
+          ${escapeHtml(bucket.featuredTool.cta)} →
+        </a>
+      </div>
+    `;
+  }
+
+  content.innerHTML = `
+    <a href="#" class="back-link">← All sections</a>
+
+    <div class="bucket-page-head">
+      <div class="bucket-page-icon-wrap">${ICONS[bucket.icon]}</div>
+      <h1 class="bucket-page-title">${escapeHtml(bucket.title)}</h1>
+    </div>
+    <p class="bucket-page-deck">${escapeHtml(bucket.deck)}</p>
+
+    ${featuredHtml}
+
+    <p class="article-list-label">Articles in this section</p>
+    ${sectionsHtml}
+
+    <div class="bucket-page-footer">
+      Have a specific question about this section? Email <a href="mailto:${SUPPORT_EMAIL}?subject=Question%20about%20${encodeURIComponent(bucket.title)}">${SUPPORT_EMAIL}</a>.
+    </div>
+  `;
+}
+
+// ============================================================================
+// Boot
+// ============================================================================
+navigate();
+</script>
+</body>
+</html>
