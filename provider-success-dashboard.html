@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provider Success Dashboard · Alpaca Health</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f0fa;
+      --bg-elev: #ffffff;
+      --bg-secondary: #ece6f7;
+      --bg-tertiary: #ddd2ee;
+
+      --bg-success: #e8f0e4;
+      --bg-warning: #fbeed7;
+      --bg-danger: #f7e1de;
+      --bg-info: #e6e0f5;
+
+      --ink: #0e0a26;
+      --ink-secondary: #2e2842;
+      --ink-tertiary: #6b6580;
+      --ink-quaternary: #a8a3b8;
+
+      --accent: #7c3aed;
+      --accent-deep: #6d28d9;
+      --accent-soft: #a78bfa;
+
+      --success: #3d6332;
+      --warning: #b07517;
+      --danger: #b13a2c;
+
+      --border: #e0d8ee;
+      --border-strong: #c8bbe0;
+
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-pill: 999px;
+
+      --serif: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 14.5px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .app {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 28px 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand-mark {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-family: var(--serif);
+      font-size: 16px; font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    .brand-name {
+      font-weight: 600; font-size: 17px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .brand-divider {
+      width: 1px; height: 16px;
+      background: var(--border-strong);
+      margin: 0 4px;
+    }
+    .brand-context {
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      font-weight: 500;
+    }
+    .topbar-meta {
+      margin-left: auto;
+      font-size: 12.5px;
+      color: var(--ink-tertiary);
+      font-weight: 500;
+    }
+
+    /* Page header */
+    .page-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 10px;
+    }
+    .page-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 38px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-variation-settings: "opsz" 144;
+    }
+    .page-title em { font-style: italic; color: var(--accent); }
+    .page-deck {
+      font-size: 15px;
+      color: var(--ink-secondary);
+      margin: 0 0 32px;
+      max-width: 720px;
+    }
+
+    /* Section headers */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin: 36px 0 16px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .section-header:first-of-type { margin-top: 0; }
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 24px;
+      letter-spacing: -0.01em;
+      margin: 0;
+      color: var(--ink);
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .section-deck {
+      font-size: 13.5px;
+      color: var(--ink-tertiary);
+      margin: 4px 0 0;
+    }
+
+    /* KPI strip (leadership view) */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .kpi-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+    }
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin: 0 0 8px;
+    }
+    .kpi-value {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+      font-variation-settings: "opsz" 144;
+    }
+    .kpi-value-suffix {
+      font-size: 14px;
+      color: var(--ink-tertiary);
+      font-family: var(--sans);
+      font-weight: 500;
+      margin-left: 4px;
+    }
+    .kpi-trend {
+      font-size: 12.5px;
+      color: var(--ink-tertiary);
+      margin: 0;
+    }
+    .kpi-trend.up { color: var(--success); }
+    .kpi-trend.down { color: var(--danger); }
+    .kpi-trend strong { font-weight: 600; }
+
+    /* Alerts */
+    .alerts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .alert-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-left: 3px solid;
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+    }
+    .alert-card.danger { border-left-color: var(--danger); }
+    .alert-card.warning { border-left-color: var(--warning); }
+    .alert-card.info { border-left-color: var(--accent); }
+
+    .alert-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .alert-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.02em;
+    }
+    .alert-badge.danger { background: var(--bg-danger); color: var(--danger); }
+    .alert-badge.warning { background: var(--bg-warning); color: var(--warning); }
+    .alert-badge.info { background: var(--bg-info); color: var(--accent-deep); }
+    .alert-count {
+      font-family: var(--mono, monospace);
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      font-weight: 500;
+    }
+    .alert-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      margin: 0 0 6px;
+      color: var(--ink);
+    }
+    .alert-desc {
+      font-size: 13px;
+      color: var(--ink-tertiary);
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
+    .alert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .alert-list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: var(--bg-secondary);
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 120ms ease;
+    }
+    .alert-list-item:hover {
+      background: var(--bg-tertiary);
+    }
+    .alert-list-name {
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .alert-list-detail {
+      font-size: 11.5px;
+      color: var(--ink-tertiary);
+    }
+
+    /* Practices table */
+    .table-wrap {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .table-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-secondary);
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: var(--sans);
+      font-size: 12.5px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-strong);
+      background: var(--bg-elev);
+      color: var(--ink-secondary);
+      cursor: pointer;
+      transition: all 120ms ease;
+    }
+    .filter-btn:hover {
+      border-color: var(--ink-secondary);
+    }
+    .filter-btn.active {
+      background: var(--ink);
+      color: white;
+      border-color: var(--ink);
+    }
+    .filter-count {
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      margin-left: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    thead {
+      background: var(--bg-elev);
+    }
+    th {
+      text-align: left;
+      padding: 11px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    th.numeric, td.numeric { text-align: right; }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 120ms ease;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--bg-secondary); }
+    td {
+      padding: 12px 14px;
+      vertical-align: middle;
+      color: var(--ink);
+    }
+    td.practice-name {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    td.muted { color: var(--ink-quaternary); }
+
+    .status-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .status-healthy { background: var(--bg-success); color: var(--success); }
+    .status-pre-launch { background: var(--bg-info); color: var(--accent-deep); }
+    .status-stalled { background: var(--bg-info); color: var(--accent-deep); }
+    .status-plateau { background: var(--bg-warning); color: var(--warning); }
+    .status-declining { background: var(--bg-danger); color: var(--danger); }
+
+    /* Sparkline / mini bar */
+    .spark {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 24px;
+    }
+    .spark-bar {
+      width: 6px;
+      background: var(--accent-soft);
+      border-radius: 1px;
+      min-height: 2px;
+    }
+    .spark-bar.first { background: var(--bg-tertiary); }
+    .spark-bar.declining { background: var(--bg-danger); }
+    .spark-numbers {
+      font-size: 11.5px;
+      color: var(--ink-tertiary);
+      margin-left: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .spark-cell {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Utilization bar */
+    .util-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 120px;
+    }
+    .util-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--bg-tertiary);
+      border-radius: 999px;
+      overflow: hidden;
+      min-width: 60px;
+    }
+    .util-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+    .util-fill.good { background: var(--success); }
+    .util-fill.warn { background: var(--warning); }
+    .util-fill.danger { background: var(--danger); }
+    .util-fill.muted { background: var(--ink-quaternary); }
+    .util-value {
+      font-size: 11.5px;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink-secondary);
+      font-weight: 500;
+      min-width: 40px;
+    }
+
+    /* Trend triangle */
+    .trend-arrow {
+      display: inline-block;
+      width: 0; height: 0;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+    .trend-arrow.up {
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 5px solid var(--success);
+    }
+    .trend-arrow.down {
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--danger);
+    }
+    .trend-arrow.flat {
+      width: 8px; height: 1.5px;
+      background: var(--ink-tertiary);
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      font-size: 12.5px;
+      color: var(--ink-tertiary);
+      text-align: center;
+    }
+    .footer-note a {
+      color: var(--accent-deep);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    /* Legend */
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 16px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      font-size: 12.5px;
+    }
+    .legend-label {
+      font-weight: 600;
+      color: var(--ink-tertiary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ink-secondary);
+    }
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* Chart grid */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .chart-card {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px 22px 18px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-card-wide { grid-column: 1 / -1; }
+
+    .chart-card-head { margin-bottom: 14px; }
+    .chart-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      margin: 0 0 6px;
+    }
+    .chart-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin: 0 0 6px;
+      color: var(--ink);
+    }
+    .chart-deck {
+      font-size: 12.5px;
+      color: var(--ink-tertiary);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .chart-body {
+      flex: 1;
+      min-height: 220px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chart-svg { width: 100%; height: auto; display: block; }
+
+    /* SVG chart elements */
+    .chart-axis-line { stroke: var(--border); stroke-width: 1; }
+    .chart-grid-line { stroke: var(--border); stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.7; }
+    .chart-axis-label {
+      font-family: var(--sans);
+      font-size: 10.5px;
+      fill: var(--ink-tertiary);
+      font-weight: 500;
+    }
+    .chart-axis-tick {
+      font-family: var(--sans);
+      font-size: 10.5px;
+      fill: var(--ink-tertiary);
+    }
+    .chart-line {
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      transition: stroke-width 120ms ease;
+    }
+    .chart-line:hover { stroke-width: 3; }
+    .chart-line.healthy { stroke: var(--success); }
+    .chart-line.plateau { stroke: var(--warning); }
+    .chart-line.declining { stroke: var(--danger); }
+    .chart-line.pre-launch { stroke: var(--ink-quaternary); }
+
+    .chart-dot { transition: r 120ms ease; }
+    .chart-dot.healthy { fill: var(--success); }
+    .chart-dot.plateau { fill: var(--warning); }
+    .chart-dot.declining { fill: var(--danger); }
+    .chart-dot.pre-launch { fill: var(--ink-quaternary); }
+
+    .chart-endpoint-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      fill: var(--ink-secondary);
+      pointer-events: none;
+    }
+
+    /* Pie / donut chart */
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .donut-svg { flex-shrink: 0; }
+    .donut-center {
+      font-family: var(--serif);
+      font-weight: 400;
+      fill: var(--ink);
+      text-anchor: middle;
+      font-variation-settings: "opsz" 144;
+    }
+    .donut-center-label {
+      font-family: var(--sans);
+      font-size: 10.5px;
+      font-weight: 500;
+      fill: var(--ink-tertiary);
+      text-anchor: middle;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .donut-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      min-width: 140px;
+    }
+    .donut-legend-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .donut-legend-row .legend-dot { width: 12px; height: 12px; flex-shrink: 0; }
+    .donut-legend-name { flex: 1; color: var(--ink-secondary); }
+    .donut-legend-value {
+      font-weight: 600;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+    }
+    .donut-legend-pct {
+      font-size: 11.5px;
+      color: var(--ink-tertiary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 1024px) {
+      .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+      .alerts-grid { grid-template-columns: 1fr; }
+      .chart-grid { grid-template-columns: 1fr; }
+      .chart-card-wide { grid-column: 1; }
+    }
+    @media (max-width: 720px) {
+      .app { padding: 20px 16px 48px; }
+      .page-title { font-size: 28px; }
+      .kpi-strip { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand-mark">A</div>
+      <span class="brand-name">Alpaca Health</span>
+      <span class="brand-divider"></span>
+      <span class="brand-context">Provider Success Dashboard</span>
+      <span class="topbar-meta" id="last-updated"></span>
+    </div>
+
+    <p class="page-eyebrow">Internal · Customer Success</p>
+    <h1 class="page-title">Provider Success <em>Dashboard</em></h1>
+    <p class="page-deck">A combined view of network health and at-risk practices. Top section shows trend signals across the entire practice base; alerts surface practices needing attention this week; the table below supports per-practice triage.</p>
+
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Network <em>health</em></h2>
+        <p class="section-deck">Aggregate KPIs across all 11 practices · Week of 4/27 vs week of 4/20</p>
+      </div>
+    </div>
+    <div class="kpi-strip" id="kpi-strip"></div>
+
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Practices needing <em>attention</em></h2>
+        <p class="section-deck">Auto-flagged based on activation status, appointment trends, and capacity utilization</p>
+      </div>
+    </div>
+    <div class="alerts-grid" id="alerts-grid"></div>
+
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">By the <em>numbers</em></h2>
+        <p class="section-deck">Each chart shows one metric across the network · 11 lines, colored by practice status</p>
+      </div>
+    </div>
+
+    <div class="legend-row">
+      <span class="legend-label">Status</span>
+      <span class="legend-item"><span class="legend-dot" style="background: var(--success);"></span> Healthy</span>
+      <span class="legend-item"><span class="legend-dot" style="background: var(--warning);"></span> Plateauing</span>
+      <span class="legend-item"><span class="legend-dot" style="background: var(--danger);"></span> Declining</span>
+      <span class="legend-item"><span class="legend-dot" style="background: var(--ink-quaternary);"></span> Pre-launch</span>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-card-head">
+          <p class="chart-eyebrow">Retrospective · last 3 weeks</p>
+          <h3 class="chart-title">Authorized hours</h3>
+          <p class="chart-deck">Capacity ceiling per practice. Rising lines mean payer authorizations are expanding.</p>
+        </div>
+        <div class="chart-body" id="chart-auth-retro"></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-head">
+          <p class="chart-eyebrow">Forward · next 3 weeks</p>
+          <h3 class="chart-title">Scheduled hours</h3>
+          <p class="chart-deck">Hours already booked. Compare against the authorized ceiling to gauge utilization.</p>
+        </div>
+        <div class="chart-body" id="chart-sched-forward"></div>
+      </div>
+
+      <div class="chart-card chart-card-wide">
+        <div class="chart-card-head">
+          <p class="chart-eyebrow">Retrospective · last 3 weeks</p>
+          <h3 class="chart-title">Appointment volume</h3>
+          <p class="chart-deck">Actual sessions delivered. The clearest signal of momentum and decline.</p>
+        </div>
+        <div class="chart-body" id="chart-appts"></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-head">
+          <p class="chart-eyebrow">Activation</p>
+          <h3 class="chart-title">Onboarding form completion</h3>
+          <p class="chart-deck">Practices that have submitted the Provider Onboarding Form are eligible to receive referrals and payouts.</p>
+        </div>
+        <div class="chart-body" id="chart-onboarding"></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-head">
+          <p class="chart-eyebrow">Network mix</p>
+          <h3 class="chart-title">Practice health distribution</h3>
+          <p class="chart-deck">How the 11 practices are distributed across health states today.</p>
+        </div>
+        <div class="chart-body" id="chart-health"></div>
+      </div>
+    </div>
+
+    <p class="footer-note">Mock dashboard · dummy data · last refreshed <span id="footer-date"></span></p>
+  </div>
+
+<script>
+// ============================================================================
+// Data (matches the uploaded CSV exactly)
+// ============================================================================
+const PRACTICES = [
+  { name: "Test Practice 1",  clinicians: 1, daysToFirst: null, dateOfFirst: null,        onboardingForm: false, apptsByWeek: [0,0,0],   apptsNext3w: 0,   authByWeek: [0,0,0],     schedByWeek: [0,0,0] },
+  { name: "Test Practice 2",  clinicians: 1, daysToFirst: null, dateOfFirst: null,        onboardingForm: false, apptsByWeek: [0,0,0],   apptsNext3w: 0,   authByWeek: [0,0,0],     schedByWeek: [0,0,0] },
+  { name: "Test Practice 3",  clinicians: 1, daysToFirst: 120,  dateOfFirst: "1/1/2026",  onboardingForm: true,  apptsByWeek: [3,6,9],   apptsNext3w: 45,  authByWeek: [10,10,20],  schedByWeek: [10,13,16] },
+  { name: "Test Practice 4",  clinicians: 2, daysToFirst: 60,   dateOfFirst: "1/1/2026",  onboardingForm: true,  apptsByWeek: [6,12,18], apptsNext3w: 90,  authByWeek: [20,30,40],  schedByWeek: [22,27,32] },
+  { name: "Test Practice 5",  clinicians: 3, daysToFirst: 30,   dateOfFirst: "1/1/2026",  onboardingForm: true,  apptsByWeek: [9,18,27], apptsNext3w: 135, authByWeek: [30,50,75],  schedByWeek: [45,53,60] },
+  { name: "Test Practice 6",  clinicians: 4, daysToFirst: 60,   dateOfFirst: "2/1/2026",  onboardingForm: true,  apptsByWeek: [12,24,36],apptsNext3w: 180, authByWeek: [40,60,90],  schedByWeek: [55,65,75] },
+  { name: "Test Practice 7",  clinicians: 5, daysToFirst: 30,   dateOfFirst: "2/1/2026",  onboardingForm: true,  apptsByWeek: [15,30,45],apptsNext3w: 225, authByWeek: [50,80,145], schedByWeek: [90,105,120] },
+  { name: "Test Practice 8",  clinicians: 6, daysToFirst: 45,   dateOfFirst: "2/1/2026",  onboardingForm: true,  apptsByWeek: [18,36,54],apptsNext3w: 270, authByWeek: [60,150,200],schedByWeek: [125,145,165] },
+  { name: "Test Practice 9",  clinicians: 7, daysToFirst: 15,   dateOfFirst: "3/1/2026",  onboardingForm: true,  apptsByWeek: [21,42,63],apptsNext3w: 315, authByWeek: [70,200,250],schedByWeek: [155,180,205] },
+  { name: "Test Practice 10", clinicians: 8, daysToFirst: 30,   dateOfFirst: "3/1/2026",  onboardingForm: true,  apptsByWeek: [24,48,29],apptsNext3w: 145, authByWeek: [80,80,80],  schedByWeek: [64,64,64] },
+  { name: "Test Practice 11", clinicians: 9, daysToFirst: 15,   dateOfFirst: "3/1/2026",  onboardingForm: true,  apptsByWeek: [27,54,36],apptsNext3w: 180, authByWeek: [90,70,50],  schedByWeek: [40,32,25] }
+];
+
+// ============================================================================
+// Status classification
+// ============================================================================
+function classify(p) {
+  // Pre-launch: hasn't completed onboarding form
+  if (!p.onboardingForm) {
+    return { status: 'pre-launch', label: 'Pre-launch' };
+  }
+  const w1 = p.apptsByWeek[0];
+  const w2 = p.apptsByWeek[1];
+  const w3 = p.apptsByWeek[2];
+
+  // Active practice analysis
+  // Declining: most recent week is meaningfully below the prior trend AND scheduled hours are dropping
+  const schedTrend = p.schedByWeek[2] - p.schedByWeek[0];
+  const declining = (w3 < w2 * 0.85) && schedTrend < 0;
+  if (declining) {
+    return { status: 'declining', label: 'Declining' };
+  }
+
+  // Plateauing: week 3 below week 2 OR scheduled hours flat near capacity
+  const plateauing = (w3 < w2) || (p.schedByWeek[0] === p.schedByWeek[1] && p.schedByWeek[1] === p.schedByWeek[2]);
+  if (plateauing) {
+    return { status: 'plateau', label: 'Plateauing' };
+  }
+
+  // Healthy: appointments growing, scheduled hours growing
+  return { status: 'healthy', label: 'Healthy' };
+}
+
+PRACTICES.forEach(p => {
+  const c = classify(p);
+  p.status = c.status;
+  p.statusLabel = c.label;
+});
+
+// ============================================================================
+// Helpers
+// ============================================================================
+function sum(arr) { return arr.reduce((a,b) => a+b, 0); }
+function avg(arr) { return arr.length ? sum(arr) / arr.length : 0; }
+
+function fmtTrend(curr, prev) {
+  if (prev === 0 && curr === 0) return { dir: 'flat', text: 'flat' };
+  if (prev === 0) return { dir: 'up', text: '+new' };
+  const pct = ((curr - prev) / prev) * 100;
+  if (Math.abs(pct) < 1) return { dir: 'flat', text: '0%' };
+  const dir = pct > 0 ? 'up' : 'down';
+  const sign = pct > 0 ? '+' : '';
+  return { dir, text: `${sign}${pct.toFixed(0)}%` };
+}
+
+function escapeHtml(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+}
+
+// ============================================================================
+// Network KPIs
+// ============================================================================
+function renderKpis() {
+  const active = PRACTICES.filter(p => p.onboardingForm);
+  const totalClinicians = sum(PRACTICES.map(p => p.clinicians));
+
+  const apptsW1 = sum(PRACTICES.map(p => p.apptsByWeek[0]));
+  const apptsW2 = sum(PRACTICES.map(p => p.apptsByWeek[1]));
+  const apptsW3 = sum(PRACTICES.map(p => p.apptsByWeek[2]));
+  const apptsTrend = fmtTrend(apptsW3, apptsW2);
+
+  // Capacity utilization across active practices for most recent week (auth vs sched)
+  // Auth = ceiling, Sched = filled. Util = sched / auth.
+  // For "next 3 wks utilization" we use scheduled hours sum / authorized hours sum (most recent auth as proxy)
+  const recentAuth = sum(active.map(p => p.authByWeek[2]));
+  const recentSched = sum(active.map(p => p.schedByWeek[2]));
+  const utilPct = recentAuth ? Math.round((recentSched / recentAuth) * 100) : 0;
+
+  // Days to first patient: median across practices that have launched
+  const launched = PRACTICES.filter(p => p.daysToFirst !== null).map(p => p.daysToFirst);
+  launched.sort((a,b) => a-b);
+  const median = launched.length ? launched[Math.floor(launched.length / 2)] : 0;
+
+  const flagged = PRACTICES.filter(p => p.status !== 'healthy').length;
+
+  const kpis = [
+    {
+      label: 'Active practices',
+      value: active.length,
+      suffix: `/ ${PRACTICES.length}`,
+      trend: `${PRACTICES.length - active.length} pre-launch`
+    },
+    {
+      label: 'Total appointments · last week',
+      value: apptsW3,
+      suffix: '',
+      trend: `<strong>${apptsTrend.text}</strong> vs prior week`,
+      trendClass: apptsTrend.dir
+    },
+    {
+      label: 'Capacity utilization',
+      value: utilPct,
+      suffix: '%',
+      trend: `${recentSched} hrs scheduled of ${recentAuth} authorized`
+    },
+    {
+      label: 'Median days to first patient',
+      value: median,
+      suffix: 'days',
+      trend: `Across ${launched.length} launched practices`
+    }
+  ];
+
+  document.getElementById('kpi-strip').innerHTML = kpis.map(k => `
+    <div class="kpi-card">
+      <p class="kpi-label">${escapeHtml(k.label)}</p>
+      <p class="kpi-value">${k.value}<span class="kpi-value-suffix">${escapeHtml(k.suffix)}</span></p>
+      <p class="kpi-trend ${k.trendClass || ''}">${k.trend}</p>
+    </div>
+  `).join('');
+}
+
+// ============================================================================
+// Alerts
+// ============================================================================
+function renderAlerts() {
+  const declining = PRACTICES.filter(p => p.status === 'declining');
+  const plateau = PRACTICES.filter(p => p.status === 'plateau');
+  const preLaunch = PRACTICES.filter(p => p.status === 'pre-launch');
+
+  const groups = [
+    {
+      severity: 'danger',
+      label: 'Urgent',
+      title: 'Declining',
+      desc: 'Appointments and scheduled hours are both trending down. Likely churn risk — reach out this week.',
+      practices: declining
+    },
+    {
+      severity: 'warning',
+      label: 'Watch',
+      title: 'Plateauing',
+      desc: 'Growth has stalled or capacity is fully booked. Investigate whether to hire or unblock.',
+      practices: plateau
+    },
+    {
+      severity: 'info',
+      label: 'Activation',
+      title: 'Pre-launch',
+      desc: 'Hasn\'t completed the Provider Onboarding Form. Check in to remove blockers.',
+      practices: preLaunch
+    }
+  ];
+
+  document.getElementById('alerts-grid').innerHTML = groups.map(g => {
+    const items = g.practices.length === 0
+      ? `<p style="font-size: 13px; color: var(--ink-quaternary); margin: 0; font-style: italic;">No practices in this state.</p>`
+      : g.practices.map(p => {
+          let detail = '';
+          if (g.severity === 'danger') {
+            const arrow = p.apptsByWeek[2] - p.apptsByWeek[1];
+            detail = `${p.apptsByWeek[1]} → ${p.apptsByWeek[2]} appts (${arrow})`;
+          } else if (g.severity === 'warning') {
+            detail = `${p.apptsByWeek[2]} appts last week`;
+          } else {
+            detail = `${p.clinicians} clinician${p.clinicians > 1 ? 's' : ''} · no onboarding`;
+          }
+          return `
+            <div class="alert-list-item" data-jump="${escapeHtml(p.name)}">
+              <span class="alert-list-name">${escapeHtml(p.name)}</span>
+              <span class="alert-list-detail">${escapeHtml(detail)}</span>
+            </div>
+          `;
+        }).join('');
+
+    return `
+      <div class="alert-card ${g.severity}">
+        <div class="alert-head">
+          <span class="alert-badge ${g.severity}">${escapeHtml(g.label)}</span>
+          <span class="alert-count">${g.practices.length} practice${g.practices.length === 1 ? '' : 's'}</span>
+        </div>
+        <h3 class="alert-title">${escapeHtml(g.title)}</h3>
+        <p class="alert-desc">${escapeHtml(g.desc)}</p>
+        <div class="alert-list">${items}</div>
+      </div>
+    `;
+  }).join('');
+
+  // Wire up click-to-scroll-and-highlight from alert items to the table row
+  document.querySelectorAll('[data-jump]').forEach(el => {
+    el.addEventListener('click', () => {
+      const name = el.getAttribute('data-jump');
+      const row = document.querySelector(`tr[data-name="${name}"]`);
+      if (row) {
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        row.style.transition = 'background-color 1.4s ease';
+        const prev = row.style.backgroundColor;
+        row.style.backgroundColor = 'var(--bg-warning)';
+        setTimeout(() => { row.style.backgroundColor = prev || ''; }, 1400);
+      }
+    });
+  });
+}
+
+// ============================================================================
+// Charts
+// ============================================================================
+const STATUS_COLOR = {
+  healthy: 'var(--success)',
+  plateau: 'var(--warning)',
+  declining: 'var(--danger)',
+  'pre-launch': 'var(--ink-quaternary)'
+};
+
+// Sort practices so "important" lines render on top:
+// pre-launch (zeros) at the bottom, healthy in the middle, plateau and declining on top
+const RENDER_ORDER = ['pre-launch', 'healthy', 'plateau', 'declining'];
+function sortedForRendering() {
+  return [...PRACTICES].sort((a, b) =>
+    RENDER_ORDER.indexOf(a.status) - RENDER_ORDER.indexOf(b.status)
+  );
+}
+
+// Generic line-chart renderer.
+// labels: array of x-axis labels (3 weeks)
+// series: array of { name, status, values: [v1,v2,v3] }
+function renderLineChart(containerId, labels, series, opts = {}) {
+  const container = document.getElementById(containerId);
+  const padL = 40, padR = 90, padT = 12, padB = 30;
+  const W = 560, H = 240;
+  const innerW = W - padL - padR;
+  const innerH = H - padT - padB;
+
+  // Build y-scale with a small headroom
+  const allValues = series.flatMap(s => s.values);
+  let maxV = Math.max(...allValues, 1);
+  // Round up to a nicer number
+  const niceMax = (() => {
+    if (maxV <= 10) return 10;
+    if (maxV <= 50) return Math.ceil(maxV / 10) * 10;
+    if (maxV <= 200) return Math.ceil(maxV / 25) * 25;
+    if (maxV <= 500) return Math.ceil(maxV / 50) * 50;
+    return Math.ceil(maxV / 100) * 100;
+  })();
+  maxV = niceMax;
+
+  const xStep = innerW / (labels.length - 1);
+  const xAt = i => padL + i * xStep;
+  const yAt = v => padT + innerH - (v / maxV) * innerH;
+
+  // y-axis ticks: 0, 25%, 50%, 75%, 100% of niceMax
+  const yTickValues = [0, maxV * 0.25, maxV * 0.5, maxV * 0.75, maxV];
+
+  const gridLines = yTickValues.map(v => `
+    <line class="chart-grid-line" x1="${padL}" y1="${yAt(v)}" x2="${W - padR}" y2="${yAt(v)}" />
+  `).join('');
+
+  const yLabels = yTickValues.map(v => `
+    <text class="chart-axis-tick" x="${padL - 8}" y="${yAt(v) + 3}" text-anchor="end">${Math.round(v)}</text>
+  `).join('');
+
+  const xLabels = labels.map((l, i) => `
+    <text class="chart-axis-tick" x="${xAt(i)}" y="${H - padB + 16}" text-anchor="middle">${escapeHtml(l)}</text>
+  `).join('');
+
+  // Endpoint label deconfliction: if multiple series end at very close y-values,
+  // stack their labels vertically.
+  const endpoints = series
+    .filter(s => s.values.some(v => v > 0)) // skip flat-zero series
+    .map(s => ({
+      name: s.name,
+      status: s.status,
+      x: xAt(labels.length - 1),
+      y: yAt(s.values[s.values.length - 1]),
+      v: s.values[s.values.length - 1]
+    }));
+
+  // Sort endpoints by y, then push labels apart vertically
+  endpoints.sort((a, b) => a.y - b.y);
+  const minGap = 12;
+  for (let i = 1; i < endpoints.length; i++) {
+    if (endpoints[i].y - endpoints[i - 1].y < minGap) {
+      endpoints[i].labelY = endpoints[i - 1].labelY != null
+        ? endpoints[i - 1].labelY + minGap
+        : endpoints[i - 1].y + minGap;
+    } else {
+      endpoints[i].labelY = endpoints[i].y;
+    }
+  }
+  if (endpoints.length > 0) endpoints[0].labelY = endpoints[0].y;
+
+  const lines = sortedForRendering().filter(p => series.find(s => s.name === p.name)).map(p => {
+    const s = series.find(s => s.name === p.name);
+    if (!s) return '';
+    const path = s.values.map((v, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i)} ${yAt(v)}`).join(' ');
+    const dots = s.values.map((v, i) => `
+      <circle class="chart-dot ${s.status}" cx="${xAt(i)}" cy="${yAt(v)}" r="3"></circle>
+    `).join('');
+    return `
+      <path class="chart-line ${s.status}" d="${path}"></path>
+      ${dots}
+    `;
+  }).join('');
+
+  // Endpoint labels (small, only for non-zero series)
+  const endpointLabels = endpoints.map(ep => {
+    const shortName = ep.name.replace('Test Practice ', 'P');
+    return `
+      <line x1="${ep.x + 4}" y1="${ep.y}" x2="${ep.x + 10}" y2="${ep.labelY}" stroke="var(--ink-quaternary)" stroke-width="0.5" />
+      <text class="chart-endpoint-label" x="${ep.x + 12}" y="${ep.labelY + 3}">${escapeHtml(shortName)} · ${ep.v}</text>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <svg class="chart-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${escapeHtml(opts.ariaLabel || 'Line chart')}">
+      ${gridLines}
+      <line class="chart-axis-line" x1="${padL}" y1="${padT + innerH}" x2="${W - padR}" y2="${padT + innerH}" />
+      ${yLabels}
+      ${xLabels}
+      ${lines}
+      ${endpointLabels}
+    </svg>
+  `;
+}
+
+// Donut chart renderer.
+// segments: array of { label, value, color }
+function renderDonut(containerId, segments, centerLabel) {
+  const container = document.getElementById(containerId);
+  const total = segments.reduce((s, x) => s + x.value, 0);
+  const size = 160, strokeW = 28;
+  const r = (size - strokeW) / 2;
+  const cx = size / 2, cy = size / 2;
+  const circumference = 2 * Math.PI * r;
+
+  let offset = 0;
+  const segs = segments.filter(s => s.value > 0).map(s => {
+    const len = (s.value / total) * circumference;
+    const arc = `<circle
+      r="${r}" cx="${cx}" cy="${cy}"
+      fill="transparent"
+      stroke="${s.color}"
+      stroke-width="${strokeW}"
+      stroke-dasharray="${len} ${circumference - len}"
+      stroke-dashoffset="${-offset}"
+      transform="rotate(-90 ${cx} ${cy})"
+    ></circle>`;
+    offset += len;
+    return arc;
+  }).join('');
+
+  const legend = segments.map(s => `
+    <div class="donut-legend-row">
+      <span class="legend-dot" style="background: ${s.color};"></span>
+      <span class="donut-legend-name">${escapeHtml(s.label)}</span>
+      <span class="donut-legend-value">${s.value}</span>
+      <span class="donut-legend-pct">${Math.round((s.value / total) * 100)}%</span>
+    </div>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="donut-wrap">
+      <svg class="donut-svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="${escapeHtml(centerLabel.aria || 'Donut chart')}">
+        <circle r="${r}" cx="${cx}" cy="${cy}" fill="transparent" stroke="var(--bg-secondary)" stroke-width="${strokeW}"></circle>
+        ${segs}
+        <text class="donut-center" x="${cx}" y="${cy - 2}" font-size="34" dy="0.05em">${total}</text>
+        <text class="donut-center-label" x="${cx}" y="${cy + 18}">${escapeHtml(centerLabel.sub)}</text>
+      </svg>
+      <div class="donut-legend">${legend}</div>
+    </div>
+  `;
+}
+
+// ============================================================================
+// Render charts
+// ============================================================================
+function renderCharts() {
+  // 1. Authorized hours — retro (3 historical weeks)
+  const authSeries = PRACTICES.map(p => ({
+    name: p.name,
+    status: p.status,
+    values: p.authByWeek
+  }));
+  renderLineChart('chart-auth-retro', ['4/13', '4/20', '4/27'], authSeries, {
+    ariaLabel: 'Authorized hours over the past three weeks, one line per practice'
+  });
+
+  // 2. Scheduled hours — forward (3 future weeks)
+  const schedSeries = PRACTICES.map(p => ({
+    name: p.name,
+    status: p.status,
+    values: p.schedByWeek
+  }));
+  renderLineChart('chart-sched-forward', ['5/4', '5/11', '5/18'], schedSeries, {
+    ariaLabel: 'Scheduled hours for the next three weeks, one line per practice'
+  });
+
+  // 3. Appointment volume — retro (3 weeks)
+  const apptsSeries = PRACTICES.map(p => ({
+    name: p.name,
+    status: p.status,
+    values: p.apptsByWeek
+  }));
+  renderLineChart('chart-appts', ['4/13', '4/20', '4/27'], apptsSeries, {
+    ariaLabel: 'Appointment volume over the past three weeks, one line per practice'
+  });
+
+  // 4. Onboarding completion donut
+  const completed = PRACTICES.filter(p => p.onboardingForm).length;
+  const notStarted = PRACTICES.length - completed;
+  renderDonut('chart-onboarding', [
+    { label: 'Form complete', value: completed, color: 'var(--accent)' },
+    { label: 'Not started', value: notStarted, color: 'var(--danger)' }
+  ], { sub: 'practices', aria: 'Onboarding form completion across practices' });
+
+  // 5. Health distribution donut
+  const counts = {
+    healthy: PRACTICES.filter(p => p.status === 'healthy').length,
+    plateau: PRACTICES.filter(p => p.status === 'plateau').length,
+    declining: PRACTICES.filter(p => p.status === 'declining').length,
+    'pre-launch': PRACTICES.filter(p => p.status === 'pre-launch').length
+  };
+  renderDonut('chart-health', [
+    { label: 'Healthy', value: counts.healthy, color: 'var(--success)' },
+    { label: 'Plateauing', value: counts.plateau, color: 'var(--warning)' },
+    { label: 'Declining', value: counts.declining, color: 'var(--danger)' },
+    { label: 'Pre-launch', value: counts['pre-launch'], color: 'var(--ink-quaternary)' }
+  ], { sub: 'practices', aria: 'Distribution of practice health status' });
+}
+
+// ============================================================================
+// Footer + meta
+// ============================================================================
+function setMeta() {
+  const date = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  document.getElementById('last-updated').textContent = `Updated ${date}`;
+  document.getElementById('footer-date').textContent = date;
+}
+
+// ============================================================================
+// Boot
+// ============================================================================
+renderKpis();
+renderAlerts();
+renderCharts();
+setMeta();
+</script>
+</body>
+</html>
